@@ -47,6 +47,7 @@
 		<script src="js/three.js"></script>
 		<script src="js/controls/controls.js"></script>
 
+
 		<div id="blocker">
 
 			<div id="instructions">
@@ -242,15 +243,11 @@
 				raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 );
 				// floor
 
-                  var mesh	= new THREEx.GrassGround({
-						width		: 150,
-						height		: 150,
-						repeatX		: 10,
-						repeatY		: 10,
-					})
-					// mesh.scale.multiplyScalar(10)
-					console.dir(mesh)
-					scene.add(mesh)
+        
+					var geometry = new THREE.BoxBufferGeometry( 1, 1, 1 );
+var material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+var mesh = new THREE.Mesh( geometry, material );
+scene.add( mesh );
 
                
 
