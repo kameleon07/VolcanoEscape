@@ -46,7 +46,6 @@
 
 		<script src="js/three.js"></script>
 		<script src="js/controls/controls.js"></script>
-        <script src="threex.grassground-master/threex.grassground.js"></script>
 
 		<div id="blocker">
 
@@ -242,35 +241,6 @@
 
 				raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 );
 				// floor
-
-                  var mesh	= new THREEx.GrassGround({
-						width		: 150,
-						height		: 150,
-						repeatX		: 10,
-						repeatY		: 10,
-					})
-					// mesh.scale.multiplyScalar(10)
-					console.dir(mesh)
-					scene.add(mesh)
-    
-				    var textureDiffuseUrl	= THREEx.GrassGround.baseUrl + 'images/grasslight-small.jpg'
-					var textureDiffuse	= THREE.ImageUtils.loadTexture(textureDiffuseUrl);
-					textureDiffuse.wrapS	= THREE.RepeatWrapping;
-					textureDiffuse.wrapT	= THREE.RepeatWrapping;
-					textureDiffuse.repeat.x= repeatX
-					textureDiffuse.repeat.y= repeatY
-					textureDiffuse.anisotropy = anisotropy;
-
-					// create the textureNormal	
-					var textureNormalUrl	= THREEx.GrassGround.baseUrl + 'images/grasslight-small-nm.jpg'
-					var textureNormal	= THREE.ImageUtils.loadTexture(textureNormalUrl);
-					textureNormal.wrapS	= THREE.RepeatWrapping;
-					textureNormal.wrapT	= THREE.RepeatWrapping;
-					textureNormal.repeat.x	= repeatX
-					textureNormal.repeat.y	= repeatY
-					textureNormal.anisotropy= anisotropy;
-
-               
 
 
 				var floorMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000} );
