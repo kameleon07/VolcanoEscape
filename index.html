@@ -129,8 +129,6 @@
 
 			var audio, playbtn, music, pausebtn;
 			var rockObject;
-			var rockObject2;
-			
 			var camera, scene, renderer, controls;
 			var objects = [];
 			var objects2 = [];
@@ -270,15 +268,7 @@
 				scene.add( rockObject );
 			}
 
-			function spawnRockObject2(x,y,z){
-				rockObject2.position.x = x;
-				rockObject2.position.y = y;
-				rockObject2.position.z = z;
-				rockObject2.castShadow = true;
-				rockObject2.scale.set( 5, 5, 5 )
-				rockObject2.receiveShadow = true;
-				scene.add( rockObject2 );
-			}
+		
 			
 			init();
 			
