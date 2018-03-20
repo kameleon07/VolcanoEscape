@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<style>
 			html, body {
-								width: 100%;
+				width: 100%;
 				height: 100%;
 			}
 			body {
@@ -120,7 +120,7 @@
 		<script src="js/loaders/MTLLoader.js"></script>
 		<script src="js/loaders/OBJLoader.js"></script>
 
-				<div id="blocker"></div>
+		<div id="blocker"></div>
 
 		<div id="instructions">
 			
@@ -156,94 +156,6 @@
 		</div>
 
 		<script>
-			var audio, playbtn, music, pausebtn;
-					
-			function mainMenuMusic(){
-			music = new Audio();
-			music.src = "audio/menuMusic.mp3";
-			music.loop = true;
-			music.play();
-			}
-			window.addEventListener("load", mainMenuMusic);
-		
-			function initAudioPlayer(){
-			music.muted=true;
-			audio = new Audio();
-			audio.src = "audio/gameplayMusic.mp3";
-			audio.loop = true;
-			audio.play();
-			}
-
-			function switchTrack(){
-			audio.muted=true;
-			music.muted=false;
-			}
-
-			playbtn = document.getElementById("playBtn");
-			playbtn.addEventListener("click", initAudioPlayer);
-			quitbtn = document.getElementById("quitBtn");
-			quitbtn.addEventListener("click", switchTrack);
-			var camera, scene, renderer, controls;
-			var objects = [];
-			var raycaster;
-
-			var menuScreen = document.getElementById("menuScreen");
-			var pauseScreen = document.getElementById("pauseScreen");
-
-			var blocker = document.getElementById( 'blocker' );
-			var instructions = document.getElementById( 'instructions' );
-
-			var defPointerLockElement = document.body; 
-			var defPointerUnlockElement = document; 
-			
-			
-			defPointerLockElement.requestPointerLock = defPointerLockElement.requestPointerLock || 
-					defPointerLockElement.mozRequestPointerLock || 
-					defPointerLockElement.webkitRequestPointerLock;
-
-			
-			defPointerUnlockElement.exitPointerLock = defPointerUnlockElement.exitPointerLock ||
-					defPointerUnlockElement.mozExitPointerLock ||
-					defPointerUnlockElement.webkitExitPointerLock;
-			
-			
-			document.addEventListener("click", (e) => {
-				
-				switch (e.target.id) {
-					//#region menuScreen
-					case "playBtn":
-						
-						defPointerLockElement.requestPointerLock();
-						menuScreen.style.display = "none";
-						break;
-					case "leaderboardBtn":
-						alert("implement me Yiannis!");
-						break;
-					case "helpBtn":
-						
-						instructions.style.display = "block";
-						menuScreen.style.display = "none";
-						break;
-					case "backBtn":
-						
-						instructions.style.display = "none";
-						menuScreen.style.display = "block";
-						break;
-					
-
-					case "continueBtn":
-						
-						defPointerLockElement.requestPointerLock();
-						break;
-					case "quitBtn":
-						defPointerUnlockElement.exitPointerLock();
-						menuScreen.style.display = "block";
-						blocker.style.display = "block";
-						pauseScreen.style.display = "none";
-
-						
-				}
-			});
 
 		<script>
 			(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//rawgit.com/mrdoob/stats.js/master/build/stats.min.js';document.head.appendChild(script);})()
@@ -508,7 +420,95 @@
 					}, onProgress, onError );
 				});
 
+							var audio, playbtn, music, pausebtn;
+					
+			function mainMenuMusic(){
+			music = new Audio();
+			music.src = "audio/menuMusic.mp3";
+			music.loop = true;
+			music.play();
+			}
+			window.addEventListener("load", mainMenuMusic);
+		
+			function initAudioPlayer(){
+			music.muted=true;
+			audio = new Audio();
+			audio.src = "audio/gameplayMusic.mp3";
+			audio.loop = true;
+			audio.play();
+			}
+
+			function switchTrack(){
+			audio.muted=true;
+			music.muted=false;
+			}
+
+			playbtn = document.getElementById("playBtn");
+			playbtn.addEventListener("click", initAudioPlayer);
+			quitbtn = document.getElementById("quitBtn");
+			quitbtn.addEventListener("click", switchTrack);
+			var camera, scene, renderer, controls;
+			var objects = [];
+			var raycaster;
+
+			var menuScreen = document.getElementById("menuScreen");
+			var pauseScreen = document.getElementById("pauseScreen");
+
+			var blocker = document.getElementById( 'blocker' );
+			var instructions = document.getElementById( 'instructions' );
+
+			var defPointerLockElement = document.body; 
+			var defPointerUnlockElement = document; 
+			
+			
+			defPointerLockElement.requestPointerLock = defPointerLockElement.requestPointerLock || 
+					defPointerLockElement.mozRequestPointerLock || 
+					defPointerLockElement.webkitRequestPointerLock;
+
+			
+			defPointerUnlockElement.exitPointerLock = defPointerUnlockElement.exitPointerLock ||
+					defPointerUnlockElement.mozExitPointerLock ||
+					defPointerUnlockElement.webkitExitPointerLock;
+			
+			
+			document.addEventListener("click", (e) => {
 				
+				switch (e.target.id) {
+					//#region menuScreen
+					case "playBtn":
+						
+						defPointerLockElement.requestPointerLock();
+						menuScreen.style.display = "none";
+						break;
+					case "leaderboardBtn":
+						alert("implement me Yiannis!");
+						break;
+					case "helpBtn":
+						
+						instructions.style.display = "block";
+						menuScreen.style.display = "none";
+						break;
+					case "backBtn":
+						
+						instructions.style.display = "none";
+						menuScreen.style.display = "block";
+						break;
+					
+
+					case "continueBtn":
+						
+						defPointerLockElement.requestPointerLock();
+						break;
+					case "quitBtn":
+						defPointerUnlockElement.exitPointerLock();
+						menuScreen.style.display = "block";
+						blocker.style.display = "block";
+						pauseScreen.style.display = "none";
+
+						
+				}
+			});
+
 
 				 
 			}
