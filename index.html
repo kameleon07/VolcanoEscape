@@ -22,8 +22,6 @@
 				background-color: rgba(0,0,0,0.5);
 				cursor: default;
 			}
-			
-			
 			#pauseScreen, #menuScreen,  #instructions {
 				position: absolute; 
 				top: 50%;
@@ -31,19 +29,13 @@
 				text-align: center; 
 				width: 100%; 
 			}
-			
-			
 			#pauseScreen, #instructions {
 				display: none;
 			}
-			
-		 #buttons{
-		   bottom:100px;
+			 #buttons{
+			   bottom:100px;
 
-		}
-
-			
-			
+			}
 			.button {
 				width: 30%; 
 				color: #ff1f00; 
@@ -53,19 +45,14 @@
 				cursor: pointer;
 				margin-top: 10px;
 			}
-			
-			
-
 			.button-play {
 				background-color: #2f2f2f;
 				border: 5px #ff1f00 solid;
 			}
-
 			.button-leaderboard {
 				background-color: #2f2f2f;
 				border: 5px #ff1f00 solid;
 			}
-
 			.button-help {
 				background-color: #2f2f2f;
 				border: 5px #ff1f00 solid;
@@ -85,9 +72,8 @@
                      display: block;
                      margin-left: auto;
                      margin-right: auto;
-                     
                      width: 80%;
-    }
+               }
          .keyboard-instructions{
          	background-color: #2f2f2f;
 				border: 5px #ff1f00 solid;
@@ -99,8 +85,8 @@
 				cursor: pointer;
 				margin-top: 10px;
          }
-      #backBtn{
-      	width: 30%; 
+	      #backBtn{
+	      	width: 30%; 
 				color: #ff1f00; 
 				padding: 5px; 
 				font-size: 30px; 
@@ -110,11 +96,9 @@
 				background-color: #2f2f2f;
 				border: 5px #ff1f00 solid;
       }
-
 		</style>
 	</head>
 	<body>
-
 		<script src="js/three.js"></script>
 		<script src="js/controls/controls.js"></script>
 		<script src="js/loaders/MTLLoader.js"></script>
@@ -123,34 +107,18 @@
 		<div id="blocker"></div>
 
 		<div id="instructions">
-			
 			<p class="keyboard-instructions"> (W, A, S, D = Move, SPACE = Jump, MOUSE = Look around)</p>
-
 			<p class="button button-blue" id="backBtn">« Back</p>
 		</div>
-
-		
 		<div id="pauseScreen">
-			
 			<p class="button button-continue" id="continueBtn">Continue</p>
-
-			
 			<p class="button button-quit" id="quitBtn">Quit</p>
 		</div>
-
-		
-		<div id="menuScreen">
-             
-             
+		<div id="menuScreen"> 
 			<img src="images/volcanoescape3.png" alt="volcano" height="700">  
-		    
             <div id="buttons">
 			<p class="button button-play" id="playBtn">Play</p>
-
-			
 			<p class="button button-leaderboard" id="leaderboardBtn">Leaderboard</p>
-
-			
 			<p class="button button-help" id="helpBtn">Help</p>
 		</div>
 		</div>
@@ -158,10 +126,13 @@
 		<script>
 
 			(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//rawgit.com/mrdoob/stats.js/master/build/stats.min.js';document.head.appendChild(script);})()
+
 			var rockObject;
 			var camera, scene, renderer, controls;
 			var objects = [];
 			var raycaster;
+			var audio, playbtn, music, pausebtn;
+
 			var blocker = document.getElementById( 'blocker' );
 			var instructions = document.getElementById( 'instructions' );
 			// http://www.html5rocks.com/en/tutorials/pointerlock/intro/
@@ -217,7 +188,6 @@
 				scene.add( rockObject );
 			}
 			init();
-			
 			var controlsEnabled = false;
 			var moveForward = false;
 			var moveBackward = false;
@@ -232,6 +202,7 @@
             var wallGeometry2;
             var wallGeometry3;
             var wallGeometry4;
+
 			function init() {
 				var mtlLoader = new THREE.MTLLoader();
 				mtlLoader.load( 'models/Rock1.mtl', function( materials ) {
@@ -295,7 +266,88 @@
 		                
 						document.addEventListener( 'keydown', onKeyDown, false );
 						document.addEventListener( 'keyup', onKeyUp, false );
+				
+			function mainMenuMusic(){
+			music = new Audio();
+			music.src = "audio/menuMusic.mp3";
+			music.loop = true;
+			music.play();
+			}
+			window.addEventListener("load", mainMenuMusic);
+			function initAudioPlayer(){
+			music.muted=true;
+			audio = new Audio();
+			audio.src = "audio/gameplayMusic.mp3";
+			audio.loop = true;
+			audio.play();
+			}
+			function switchTrack(){
+			audio.muted=true;
+			music.muted=false;
+			}
+			playbtn = document.getElementById("playBtn");
+			playbtn.addEventListener("click", initAudioPlayer);
+			quitbtn = document.getElementById("quitBtn");
+			quitbtn.addEventListener("click", switchTrack);
+			
 
+			var menuScreen = document.getElementById("menuScreen");
+			var pauseScreen = document.getElementById("pauseScreen");
+
+			var blocker = document.getElementById( 'blocker' );
+			var instructions = document.getElementById( 'instructions' );
+
+			var defPointerLockElement = document.body; 
+			var defPointerUnlockElement = document; 
+			
+			
+			defPointerLockElement.requestPointerLock = defPointerLockElement.requestPointerLock || 
+					defPointerLockElement.mozRequestPointerLock || 
+					defPointerLockElement.webkitRequestPointerLock;
+
+			
+			defPointerUnlockElement.exitPointerLock = defPointerUnlockElement.exitPointerLock ||
+					defPointerUnlockElement.mozExitPointerLock ||
+					defPointerUnlockElement.webkitExitPointerLock;
+			
+			
+			document.addEventListener("click", (e) => {
+				
+				switch (e.target.id) {
+					//#region menuScreen
+					case "playBtn":
+						
+						defPointerLockElement.requestPointerLock();
+						menuScreen.style.display = "none";
+						break;
+					case "leaderboardBtn":
+						alert("implement me Yiannis!");
+						break;
+					case "helpBtn":
+						
+						instructions.style.display = "block";
+						menuScreen.style.display = "none";
+						break;
+					case "backBtn":
+						
+						instructions.style.display = "none";
+						menuScreen.style.display = "block";
+						break;
+					
+
+					case "continueBtn":
+						
+						defPointerLockElement.requestPointerLock();
+						break;
+					case "quitBtn":
+						defPointerUnlockElement.exitPointerLock();
+						menuScreen.style.display = "block";
+						blocker.style.display = "block";
+						pauseScreen.style.display = "none";
+
+						
+				}
+			});
 		                //----------------------------------------------------------------//
 		                // floor and cubes//
 		                //----------------------------------------------------------------//
@@ -418,99 +470,7 @@
 						animate();
 					}, onProgress, onError );
 				});
-
-							var audio, playbtn, music, pausebtn;
-					
-			function mainMenuMusic(){
-			music = new Audio();
-			music.src = "audio/menuMusic.mp3";
-			music.loop = true;
-			music.play();
-			}
-			window.addEventListener("load", mainMenuMusic);
-		
-			function initAudioPlayer(){
-			music.muted=true;
-			audio = new Audio();
-			audio.src = "audio/gameplayMusic.mp3";
-			audio.loop = true;
-			audio.play();
-			}
-
-			function switchTrack(){
-			audio.muted=true;
-			music.muted=false;
-			}
-
-			playbtn = document.getElementById("playBtn");
-			playbtn.addEventListener("click", initAudioPlayer);
-			quitbtn = document.getElementById("quitBtn");
-			quitbtn.addEventListener("click", switchTrack);
-			var camera, scene, renderer, controls;
-			var objects = [];
-			var raycaster;
-
-			var menuScreen = document.getElementById("menuScreen");
-			var pauseScreen = document.getElementById("pauseScreen");
-
-			var blocker = document.getElementById( 'blocker' );
-			var instructions = document.getElementById( 'instructions' );
-
-			var defPointerLockElement = document.body; 
-			var defPointerUnlockElement = document; 
-			
-			
-			defPointerLockElement.requestPointerLock = defPointerLockElement.requestPointerLock || 
-					defPointerLockElement.mozRequestPointerLock || 
-					defPointerLockElement.webkitRequestPointerLock;
-
-			
-			defPointerUnlockElement.exitPointerLock = defPointerUnlockElement.exitPointerLock ||
-					defPointerUnlockElement.mozExitPointerLock ||
-					defPointerUnlockElement.webkitExitPointerLock;
-			
-			
-			document.addEventListener("click", (e) => {
-				
-				switch (e.target.id) {
-					//#region menuScreen
-					case "playBtn":
-						
-						defPointerLockElement.requestPointerLock();
-						menuScreen.style.display = "none";
-						break;
-					case "leaderboardBtn":
-						alert("implement me Yiannis!");
-						break;
-					case "helpBtn":
-						
-						instructions.style.display = "block";
-						menuScreen.style.display = "none";
-						break;
-					case "backBtn":
-						
-						instructions.style.display = "none";
-						menuScreen.style.display = "block";
-						break;
-					
-
-					case "continueBtn":
-						
-						defPointerLockElement.requestPointerLock();
-						break;
-					case "quitBtn":
-						defPointerUnlockElement.exitPointerLock();
-						menuScreen.style.display = "block";
-						blocker.style.display = "block";
-						pauseScreen.style.display = "none";
-
-						
-				}
-			});
-
-
 				 
-			}
 			function onWindowResize() {
 				camera.aspect = window.innerWidth / window.innerHeight;
 				camera.updateProjectionMatrix();
