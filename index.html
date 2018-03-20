@@ -393,7 +393,7 @@
 
 				var vertex = floorGeometry.vertices[ i ];
 				vertex.x += Math.random() * 15 - 10;
-				vertex.y += Math.random() * 20;
+				vertex.y += Math.random() * 3;
 				vertex.z += Math.random() * 15 - 10;
 			   }
 
@@ -401,7 +401,7 @@
 						var face = floorGeometry.faces[ i ];
 						face.vertexColors[ 0 ] = new THREE.Color(0xD2691E);
 						face.vertexColors[ 1 ] = new THREE.Color(0xE60000);
-						face.vertexColors[ 2 ] = new THREE.Color(0xD2FE2C);
+						face.vertexColors[ 2 ] = new THREE.Color(0x661400);
 					}
 
 				 var boxGeometry = new THREE.BoxGeometry( 15, 15, 15);
