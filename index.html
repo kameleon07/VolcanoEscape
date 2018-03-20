@@ -392,14 +392,14 @@
 
 				}
 
-		        floorGeometry = new THREE.PlaneGeometry( 130, 130, 40, 40 );
+		        floorGeometry = new THREE.PlaneGeometry( 130, 130, 50, 50 );
 				floorGeometry.rotateX( - Math.PI / 2 );
 
 				for ( var i = 0, l = floorGeometry.vertices.length; i < l; i ++ ) {
 
 				var vertex = floorGeometry.vertices[ i ];
 				vertex.x += Math.random() * 15 - 10;
-				vertex.y += Math.random() * 3;
+				vertex.y += Math.random() * 5;
 				vertex.z += Math.random() * 15 - 10;
 			   }
 
