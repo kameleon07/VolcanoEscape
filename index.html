@@ -399,7 +399,7 @@
 
 			   for ( var i = 0, l = floorGeometry.faces.length; i < l; i ++ ) {
 						var face = floorGeometry.faces[ i ];
-						face.vertexColors[ 0 ] = new THREE.Color(0xffd11a);
+						face.vertexColors[ 0 ] = new THREE.Color().setHSL( Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
 						face.vertexColors[ 1 ] = new THREE.Color().setHSL( Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
 						face.vertexColors[ 2 ] = new THREE.Color().setHSL( Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
 					}
