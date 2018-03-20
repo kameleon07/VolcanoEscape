@@ -395,12 +395,12 @@
 				vertex.x += Math.random() * 15 - 10;
 				vertex.y += Math.random() * 2;
 				vertex.z += Math.random() * 15 - 10;
-			}
+			   }
 
-			 var boxGeometry = new THREE.BoxGeometry( 15, 15, 15);
-			for ( var i = 0, l = floorGeometry.faces.length; i < l; i ++ ) {
-			var face = floorGeometry.faces[ i ];
-			}
+				 var boxGeometry = new THREE.BoxGeometry( 15, 15, 15);
+				for ( var i = 0, l = floorGeometry.faces.length; i < l; i ++ ) {
+				var face = floorGeometry.faces[ i ];
+				}
 		
 						var wallMaterial = new THREE.MeshBasicMaterial({ color: 0xD2691E,  specular: 0xFFFFFF, flatShading: true} );
 						var wall = new THREE.Mesh( wallGeometry, wallMaterial );
@@ -444,7 +444,7 @@
 						// floor
 
 
-						var floorMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000} );
+						var floorMaterial = new THREE.MeshBasicMaterial({ color: 0xffd11a} );
 						var floor = new THREE.Mesh( floorGeometry, floorMaterial );
 						scene.add( floor );
 						//
