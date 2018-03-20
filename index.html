@@ -415,11 +415,11 @@
 						face.vertexColors[ 2 ] = new THREE.Color(0x661400);
 					}
 
-				 var boxGeometry = new THREE.BoxGeometry( 15, 15, 15);
+				 var boxGeometry = new THREE.BoxGeometry( 12, 12, 12);
 				for ( var i = 0, l = floorGeometry.faces.length; i < l; i ++ ) {
 				var face = floorGeometry.faces[ i ];
 				}
-				 var boxGeometry2 = new THREE.BoxGeometry( 25, 25, 25);
+				 var boxGeometry2 = new THREE.BoxGeometry( 23, 23, 23);
 				for ( var i = 0, l = floorGeometry.faces.length; i < l; i ++ ) {
 				var face2 = floorGeometry.faces[ i ];
 				}
@@ -433,7 +433,7 @@
 
 						// objects
 						var boxMaterial = new THREE.MeshPhongMaterial({color:0xff0000, transparent:true, opacity:0, side: THREE.DoubleSide});
-						for ( var i = 0; i < 600; i ++ ) {
+						for ( var i = 0; i < 1000; i ++ ) {
 							//boxMaterial.color.setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
 
 							var box = new THREE.Mesh( boxGeometry, boxMaterial );
@@ -448,7 +448,7 @@
 							object2.position.y = randomYPos;
 							object2.position.z = randomZPos;
 							object2.castShadow = true;
-							object2.scale.set( 5, 5, 5 )
+							object2.scale.set( 4, 4, 4 )
 							object2.receiveShadow = true;
 							object2.visible = true;
 							scene.add( object2 );
@@ -457,7 +457,7 @@
 						}
 					      
 	                    var boxMaterial2 = new THREE.MeshPhongMaterial({color:0xff0000, transparent:true, opacity:0, side: THREE.DoubleSide});
-						for ( var i = 0; i < 600; i ++ ) {
+						for ( var i = 0; i < 1000; i ++ ) {
 
 							var box2 = new THREE.Mesh( boxGeometry2, boxMaterial2 );
 							var randomXPos = Math.floor( Math.random() * 20 - 10 ) * 7;
@@ -471,7 +471,7 @@
 							object3.position.y = randomYPos;
 							object3.position.z = randomZPos;
 							object3.castShadow = true;
-							object3.scale.set( 9, 9, 9 )
+							object3.scale.set( 8, 8, 8 )
 							object3.receiveShadow = true;
 							object3.visible = true;
 							scene.add( object3 );
@@ -527,6 +527,7 @@
 						velocity.y = Math.max( 0, velocity.y );
 						canJump = true;
 					}
+
                     //--------------------------------------------------------//
                                      //makes lava go up//
 					floorGeometry.translate(0,0.1,0);
