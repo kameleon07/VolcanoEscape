@@ -476,7 +476,7 @@
 							object3.visible = true;
 							scene.add( object3 );
 							scene.add( box2 );
-							objects.push( box2 );
+							objects2.push( box2 );
 						}
 
 						//----------------------------------------------------------------//
@@ -511,8 +511,10 @@
 				if ( controlsEnabled === true ) {
 					raycaster.ray.origin.copy( controls.getObject().position );
 					raycaster.ray.origin.y -= 10;
-					var intersections = raycaster.intersectObjects( objects );
+					var intersections = raycaster.intersectObjects( objects);
+					var intersections = raycaster.intersectObjects( objects2);
 					var onObject = intersections.length > 0;
+					var onObject2 = intersections.length > 0;
 					var time = performance.now();
 					var delta = ( time - prevTime ) / 1000;
  					velocity.x -= velocity.x * 10.0 * delta;
@@ -527,7 +529,10 @@
 						velocity.y = Math.max( 0, velocity.y );
 						canJump = true;
 					}
-
+					if ( onObject2 === true ) {
+						velocity.y = 250
+						canJump = false;
+					}
                     //--------------------------------------------------------//
                                      //makes lava go up//
 					floorGeometry.translate(0,0.1,0);
