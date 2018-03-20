@@ -513,9 +513,9 @@
 					raycaster.ray.origin.copy( controls.getObject().position );
 					raycaster.ray.origin.y -= 10;
 					var intersections = raycaster.intersectObjects( objects);
-					var intersections = raycaster.intersectObjects( objects2);
+					var intersections2 = raycaster.intersectObjects( objects2);
 					var onObject = intersections.length > 0;
-					var onObject2 = intersections.length > 0;
+					var onObject2 = intersections2.length > 0;
 					var time = performance.now();
 					var delta = ( time - prevTime ) / 1000;
  					velocity.x -= velocity.x * 10.0 * delta;
@@ -526,13 +526,13 @@
 					direction.normalize(); // this ensures consistent movements in all directions
 					if ( moveForward || moveBackward ) velocity.z -= direction.z * 400.0 * delta;
 					if ( moveLeft || moveRight ) velocity.x -= direction.x * 400.0 * delta;
-					if ( onObject === true ) {
-						velocity.y = 250
-						canJump = false
-					}
 					if ( onObject2 === true ) {
 						velocity.y = Math.max( 0, velocity.y );
 						canJump = true;
+					}
+					if ( onObject === true ) {
+						velocity.y = 250
+						canJump = false;
 					}
                     //--------------------------------------------------------//
                                      //makes lava go up//
