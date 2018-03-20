@@ -552,10 +552,10 @@
 					raycaster.ray.origin.y -= 10;
 					var intersections = raycaster.intersectObjects( objects);
 					var intersections2 = raycaster.intersectObjects( objects2);
-					var intersections2 = raycaster.intersectObjects( objects3);
+					var intersections3 = raycaster.intersectObjects( objects3);
 					var onObject = intersections.length > 0;
 					var onObject2 = intersections2.length > 0;
-					var onObject3 = intersections2.length > 0;
+					var onObject3 = intersections3.length > 0;
 					var time = performance.now();
 					var delta = ( time - prevTime ) / 1000;
  					velocity.x -= velocity.x * 10.0 * delta;
