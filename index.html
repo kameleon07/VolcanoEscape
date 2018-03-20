@@ -419,9 +419,9 @@
 				for ( var i = 0, l = floorGeometry.faces.length; i < l; i ++ ) {
 				var face = floorGeometry.faces[ i ];
 				}
-				 var boxGeometry2 = new THREE.BoxGeometry( 20, 20, 20);
+				 var boxGeometry2 = new THREE.BoxGeometry( 25, 25, 25);
 				for ( var i = 0, l = floorGeometry.faces.length; i < l; i ++ ) {
-				var face = floorGeometry.faces[ i ];
+				var face2 = floorGeometry.faces[ i ];
 				}
 		
 						var wallMaterial = new THREE.MeshBasicMaterial({ color: 0xD2691E,  specular: 0xFFFFFF, flatShading: true} );
@@ -434,8 +434,6 @@
 						// objects
 						var boxMaterial = new THREE.MeshPhongMaterial({color:0xff0000, transparent:true, opacity:0, side: THREE.DoubleSide});
 						for ( var i = 0; i < 600; i ++ ) {
-
-							
 							//boxMaterial.color.setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
 
 							var box = new THREE.Mesh( boxGeometry, boxMaterial );
@@ -458,13 +456,10 @@
 							objects.push( box );
 						}
 					      
-	                    var boxMaterial = new THREE.MeshPhongMaterial({color:0xff0000, transparent:true, opacity:0, side: THREE.DoubleSide});
+	                    var boxMaterial2 = new THREE.MeshPhongMaterial({color:0xff0000, transparent:true, opacity:0, side: THREE.DoubleSide});
 						for ( var i = 0; i < 600; i ++ ) {
 
-							
-							//boxMaterial.color.setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
-
-							var box2 = new THREE.Mesh( boxGeometry2, boxMaterial );
+							var box2 = new THREE.Mesh( boxGeometry2, boxMaterial2 );
 							var randomXPos = Math.floor( Math.random() * 20 - 10 ) * 7;
 							var randomYPos = Math.floor( Math.random() * 600 ) * 20 + 10;
 							var randomZPos = Math.floor( Math.random() * 20 - 10 ) * 7;
@@ -476,12 +471,12 @@
 							object3.position.y = randomYPos;
 							object3.position.z = randomZPos;
 							object3.castShadow = true;
-							object3.scale.set( 10, 10, 10 )
+							object3.scale.set( 9, 9, 9 )
 							object3.receiveShadow = true;
 							object3.visible = true;
 							scene.add( object3 );
-							scene.add( box );
-							objects.push( box );
+							scene.add( box2 );
+							objects.push( box2 );
 						}
 
 						//----------------------------------------------------------------//
