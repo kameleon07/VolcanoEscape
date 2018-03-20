@@ -355,39 +355,39 @@
 		                // floor and cubes//
 		                //----------------------------------------------------------------//
 
-                wallGeometry = new THREE.PlaneGeometry( 300, 5000, 320,160 );
+                wallGeometry = new THREE.PlaneGeometry( 300, 10000, 320,160 );
 
                 for ( var i = 0, l = wallGeometry.vertices.length; i < l; i ++ ) {
 					var vertex = wallGeometry.vertices[ i ];
 					vertex.x += Math.random() * 30 - 5;
-					vertex.y += Math.random() * 3 + 2450;
+					vertex.y += Math.random() * 3 + 5000;
 					vertex.z += Math.random() * 30 + 70;
 
 				}   
-				wallGeometry2 = new THREE.PlaneGeometry( 300, 5000, 320,160 );
+				wallGeometry2 = new THREE.PlaneGeometry( 300, 10000, 320,160 );
                 wallGeometry2.rotateY( - Math.PI / 2 );
                 for ( var i = 0, l = wallGeometry2.vertices.length; i < l; i ++ ) {
 					var vertex = wallGeometry2.vertices[ i ];
 					vertex.x += Math.random() * 30 - 95;
-					vertex.y += Math.random() * 3 + 2450;
+					vertex.y += Math.random() * 3 + 5000;
 					vertex.z += Math.random() * 30 - 5;
 
 				}
-               wallGeometry3 = new THREE.PlaneGeometry( 300, 5000, 320,160 );
+               wallGeometry3 = new THREE.PlaneGeometry( 300, 10000, 320,160 );
 
                 for ( var i = 0, l = wallGeometry3.vertices.length; i < l; i ++ ) {
 					var vertex = wallGeometry3.vertices[ i ];
 			        vertex.x += Math.random() * 30 - 5;
-					vertex.y += Math.random() * 3 + 2450;
+					vertex.y += Math.random() * 3 + 5000;
 					vertex.z += Math.random() * 30 - 80;
 
 				}
-                  wallGeometry4 = new THREE.PlaneGeometry( 300, 5000, 320,160 );
+                  wallGeometry4 = new THREE.PlaneGeometry( 300, 10000, 320,160 );
                   wallGeometry4.rotateY( - Math.PI / 2 );
                 for ( var i = 0, l = wallGeometry4.vertices.length; i < l; i ++ ) {
 					var vertex = wallGeometry4.vertices[ i ];
 				    vertex.x += Math.random() * 30 + 70;
-					vertex.y += Math.random() * 3 + 2450;
+					vertex.y += Math.random() * 3 + 5000;
 					vertex.z += Math.random() * 30 - 5;
 
 				}
@@ -455,7 +455,7 @@
 							//boxMaterial.color.setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
 
 							var box = new THREE.Mesh( boxGeometry, boxMaterial );
-							var randomXPos = Math.floor( Math.random() * 20 - 10 ) * 6;
+							var randomXPos = Math.floor( Math.random() * 20 - 10 ) * 7;
 							var randomYPos = Math.floor( Math.random() * 600 ) * 20 + 10;
 							var randomZPos = Math.floor( Math.random() * 20 - 10 ) * 7;
 							box.position.x = randomXPos;
@@ -478,7 +478,7 @@
 						for ( var i = 0; i < 1400; i ++ ) {
 
 							var box2 = new THREE.Mesh( boxGeometry2, boxMaterial2 );
-							var randomXPos = Math.floor( Math.random() * 20 - 10 ) * 6;
+							var randomXPos = Math.floor( Math.random() * 20 - 10 ) * 7;
 							var randomYPos = Math.floor( Math.random() * 600 ) * 20 + 10;
 							var randomZPos = Math.floor( Math.random() * 20 - 10 ) * 7;
 							box2.position.x = randomXPos;
@@ -502,7 +502,7 @@
 							//boxMaterial.color.setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
 
 							var box3 = new THREE.Mesh( boxGeometry3, boxMaterial3 );
-							var randomXPos = Math.floor( Math.random() * 20 - 10 ) * 6;
+							var randomXPos = Math.floor( Math.random() * 20 - 10 ) * 7;
 							var randomYPos = Math.floor( Math.random() * 600 ) * 20 + 10;
 							var randomZPos = Math.floor( Math.random() * 20 - 10 ) * 7;
 							box3.position.x = randomXPos;
