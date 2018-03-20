@@ -130,9 +130,11 @@
 			var audio, playbtn, music, pausebtn;
 			var rockObject;
 			var rockObject2;
+			var rockObject3;
 			var camera, scene, renderer, controls;
 			var objects = [];
 			var objects2 = [];
+			var objects3 = [];
 			var raycaster;
 			var blocker = document.getElementById( 'blocker' );
 			var instructions = document.getElementById( 'instructions' );
@@ -276,6 +278,15 @@
 				rockObject2.scale.set( 5, 5, 5 )
 				rockObject2.receiveShadow = true;
 				scene.add( rockObject2 );
+			}
+			function spawnRockObject3(x,y,z){
+				rockObject3.position.x = x;
+				rockObject3.position.y = y;
+				rockObject3.position.z = z;
+				rockObject3.castShadow = true;
+				rockObject3.scale.set( 5, 5, 5 )
+				rockObject3.receiveShadow = true;
+				scene.add( rockObject3 );
 			}
 			init();
 			
@@ -424,6 +435,10 @@
 				for ( var i = 0, l = floorGeometry.faces.length; i < l; i ++ ) {
 				var face2 = floorGeometry.faces[ i ];
 				}
+				var boxGeometry3 = new THREE.BoxGeometry( 16, 16, 16);
+				for ( var i = 0, l = floorGeometry.faces.length; i < l; i ++ ) {
+				var face2 = floorGeometry.faces[ i ];
+				}
 		
 						var wallMaterial = new THREE.MeshBasicMaterial({ color: 0xD2691E,  specular: 0xFFFFFF, flatShading: true} );
 						var wall = new THREE.Mesh( wallGeometry, wallMaterial );
@@ -480,6 +495,29 @@
 							objects2.push( box2 );
 						}
 
+						var boxMaterial3 = new THREE.MeshPhongMaterial({color:0xff0000, transparent:true, opacity:0, side: THREE.DoubleSide});
+						for ( var i = 0; i < 1000; i ++ ) {
+							//boxMaterial.color.setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+
+							var box3 = new THREE.Mesh( boxGeometry3, boxMaterial3 );
+							var randomXPos = Math.floor( Math.random() * 20 - 10 ) * 7;
+							var randomYPos = Math.floor( Math.random() * 600 ) * 20 + 10;
+							var randomZPos = Math.floor( Math.random() * 20 - 10 ) * 7;
+							box3.position.x = randomXPos;
+							box3.position.y = randomYPos;
+							box3.position.z = randomZPos;
+							var object4 = object.clone();
+							object4.position.x = randomXPos;
+							object4.position.y = randomYPos;
+							object4.position.z = randomZPos;
+							object4.castShadow = true;
+							object4.scale.set( 4, 4, 4 )
+							object4.receiveShadow = true;
+							object4.visible = true;
+							scene.add( object4 );
+							scene.add( box3 );
+							objects3.push( box3 );
+						}
 						//----------------------------------------------------------------//
 
 						raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 );
@@ -514,8 +552,10 @@
 					raycaster.ray.origin.y -= 10;
 					var intersections = raycaster.intersectObjects( objects);
 					var intersections2 = raycaster.intersectObjects( objects2);
+					var intersections2 = raycaster.intersectObjects( objects3);
 					var onObject = intersections.length > 0;
 					var onObject2 = intersections2.length > 0;
+					var onObject3 = intersections2.length > 0;
 					var time = performance.now();
 					var delta = ( time - prevTime ) / 1000;
  					velocity.x -= velocity.x * 10.0 * delta;
@@ -526,12 +566,16 @@
 					direction.normalize(); // this ensures consistent movements in all directions
 					if ( moveForward || moveBackward ) velocity.z -= direction.z * 400.0 * delta;
 					if ( moveLeft || moveRight ) velocity.x -= direction.x * 400.0 * delta;
+					if ( onObject === true ) {
+						velocity.y = 150
+						canJump = false;
+					}
 					if ( onObject2 === true ) {
 						velocity.y = Math.max( 0, velocity.y );
 						canJump = true;
 					}
-					if ( onObject === true ) {
-						velocity.y = 150
+					if ( onObject3 === true ) {
+						velocity.y = Math.max(-7, velocity.y);
 						canJump = false;
 					}
                     //--------------------------------------------------------//
