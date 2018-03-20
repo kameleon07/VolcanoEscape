@@ -410,14 +410,14 @@
 						face4.vertexColors[ 2 ] = new THREE.Color(0x661400);
 					}
 
-			    floorGeometry2 = new THREE.PlaneGeometry( 130, 130, 20, 20 );
+			    floorGeometry2 = new THREE.PlaneGeometry( 130, 130, 50, 50 );
 				floorGeometry2.rotateX( - Math.PI / 2 );
 
 				for ( var i = 0, l = floorGeometry2.vertices.length; i < l; i ++ ) {
 
 				var vertex2 = floorGeometry2.vertices[ i ];
 				vertex2.x += Math.random() * 15 - 10;
-				vertex2.y += Math.random() * 2;
+				vertex2.y += Math.random() * 1;
 				vertex2.z += Math.random() * 15 - 10;
 			   }
 
