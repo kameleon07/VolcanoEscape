@@ -135,8 +135,6 @@
 		<script>
 			(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//rawgit.com/mrdoob/stats.js/master/build/stats.min.js';document.head.appendChild(script);})()
 
-  
-            var wallleftBox;
 			var audio, playbtn, music, pausebtn;
 			var rockObject;
 			var camera, scene, renderer, controls;
@@ -460,22 +458,6 @@
 						var wall4 = new THREE.Mesh( wallGeometry4, wallMaterial );
 						scene.add(wall, wall2, wall3, wall4);
 
-                       wallleftBox = new THREE.BoundingBoxHelper( wall );
-                        wallleftBox.update(wall);
-                            wallleftBox.box.min.x -= 0.1;
-				        wallleftBox.box.max.x += 0.1;
-				        scene.add(wallleftBox);
-
-
-
-
-
-
-
-
-
-
-
 						// objects
 						var boxMaterial = new THREE.MeshPhongMaterial({color:0xff0000, transparent:true, opacity:0, side: THREE.DoubleSide});
 						for ( var i = 0; i < 600; i ++ ) {
@@ -550,6 +532,8 @@
 
 
 
+                        var box10 = new THREE.BoxHelper( wall, 0xffff00 );
+                        scene.add( box10 );
 						//----------------------------------------------------------------//
 						//****** Why the fuck can I still walk through that cube?   ******//
 
@@ -606,12 +590,10 @@
 					var intersections = raycaster.intersectObjects( objects);
 					var intersections2 = raycaster.intersectObjects( objects2);
 					var intersections3 = raycaster.intersectObjects( objects3);
-					var intersections4 = raycaster.intersectObject(wallleftBox);
 					//var intersections4 = raycaster.intersectObjects( boundBoxes);
 					var onObject = intersections.length > 0;
 					var onObject2 = intersections2.length > 0;
 					var onObject3 = intersections3.length > 0;
-					var onObject4 = intersections4.length > 0;
 					//var onObject4 = intersections4.length > 0;
 					var time = performance.now();
 					var delta = ( time - prevTime ) / 1000;
@@ -634,10 +616,6 @@
 					if ( onObject3 === true ) {
 						velocity.y = Math.max(-7, velocity.y);
 						canJump = false;
-					}
-					if (onObject4 === wallleftBox){
-					moveForward = false;
-				
 					}
 					/*if ( onObject4 === true ) {
 						velocity.y = Math.max( 0, velocity.y );
