@@ -606,9 +606,9 @@
 					var intersections3 = raycaster.intersectObjects( objects3);
 					var intersections4 = raycaster.intersectObject(wallleftBox);
 					//var intersections4 = raycaster.intersectObjects( boundBoxes);
-					var onObject = intersections.length > 0;
-					var onObject2 = intersections2.length > 0;
-					var onObject3 = intersections3.length > 0;
+					var onObject = intersections.box > 0;
+					var onObject2 = intersections2.box > 0;
+					var onObject3 = intersections3.box > 0;
 					var onObject4 = intersections4.box > 0;
 					//var onObject4 = intersections4.length > 0;
 					var time = performance.now();
