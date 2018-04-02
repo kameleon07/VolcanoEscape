@@ -95,6 +95,12 @@
 				background-color: #2f2f2f;
 				border: 5px #ff1f00 solid;
       }
+      #score{
+      	position: absolute;
+	    top: 8px;
+	    right: 16px;
+	    font-size: 18px;
+      }
 		</style>
 	</head>
 	<body>
@@ -123,7 +129,9 @@
 			<p class="button button-help" id="helpBtn">Help</p>
 		</div>
 		</div>
-
+		<div id="score">
+			<p id="scoreText"></p>
+		</div>
 		<script>
 			(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//rawgit.com/mrdoob/stats.js/master/build/stats.min.js';document.head.appendChild(script);})()
 
@@ -133,6 +141,7 @@
 			var objects = [];
 			var objects2 = [];
 			var objects3 = [];
+			var boundBoxes = [];
 			var raycaster;
 			var blocker = document.getElementById( 'blocker' );
 			var instructions = document.getElementById( 'instructions' );
@@ -321,7 +330,7 @@
 									moveRight = true;
 									break;
 								case 32: // space
-									if ( canJump === true ) velocity.y += 350;
+									if ( canJump === true ) velocity.y += 90;
 									canJump = false;
 									break;
 							}
@@ -429,15 +438,15 @@
 					}
 
 
-				 var boxGeometry = new THREE.BoxGeometry( 12, 12, 12);
+				 var boxGeometry = new THREE.BoxGeometry( 12, 1, 12);
 				for ( var i = 0, l = floorGeometry.faces.length; i < l; i ++ ) {
 				var face1 = floorGeometry.faces[ i ];
 				}
-				 var boxGeometry2 = new THREE.BoxGeometry( 23, 23, 23);
+				 var boxGeometry2 = new THREE.BoxGeometry( 23, 1, 23);
 				for ( var i = 0, l = floorGeometry.faces.length; i < l; i ++ ) {
 				var face2 = floorGeometry.faces[ i ];
 				}
-				var boxGeometry3 = new THREE.BoxGeometry( 16, 16, 16);
+				var boxGeometry3 = new THREE.BoxGeometry( 16, 1, 16);
 				for ( var i = 0, l = floorGeometry.faces.length; i < l; i ++ ) {
 				var face3 = floorGeometry.faces[ i ];
 				}
@@ -463,7 +472,7 @@
 							box.position.z = randomZPos;
 							var object2 = object.clone();
 							object2.position.x = randomXPos;
-							object2.position.y = randomYPos;
+							object2.position.y = randomYPos-6;
 							object2.position.z = randomZPos;
 							object2.castShadow = true;
 							object2.scale.set( 4, 4, 4 )
@@ -486,7 +495,7 @@
 							box2.position.z = randomZPos;
 							var object3 = object.clone();
 							object3.position.x = randomXPos;
-							object3.position.y = randomYPos;
+							object3.position.y = randomYPos-12;
 							object3.position.z = randomZPos;
 							object3.castShadow = true;
 							object3.scale.set( 8, 8, 8 )
@@ -510,7 +519,7 @@
 							box3.position.z = randomZPos;
 							var object4 = object.clone();
 							object4.position.x = randomXPos;
-							object4.position.y = randomYPos;
+							object4.position.y = randomYPos-8;
 							object4.position.z = randomZPos;
 							object4.castShadow = true;
 							object4.scale.set( 6, 6, 6 )
@@ -521,11 +530,30 @@
 							objects3.push( box3 );
 						}
 						//----------------------------------------------------------------//
+						//****** Why the fuck can I still walk through that cube?   ******//
+
+						var boundBox1G = new THREE.BoxGeometry( 23, 23, 23);
+						var boundBox1M = new THREE.MeshPhongMaterial({color:0xff0000, side: THREE.DoubleSide});
+						var boundBox1 = new THREE.Mesh( boundBox1G, boundBox1M );
+						boundBox1.position.x = 10;
+						boundBox1.position.y = 10;
+						boundBox1.position.z = 10;
+						scene.add( boundBox1 );
+						boundBoxes.push( boundBox1 );
+
+						// some tests
+						/*var boundBox1 = new THREE.Box3().setFromObject(wall);
+						var boundBox2 = new THREE.Box3().setFromObject(wall2);
+						var boundBox3 = new THREE.Box3().setFromObject(wall3);
+						var boundBox4 = new THREE.Box3().setFromObject(wall4);
+						scene.add( boundBox1 );
+						scene.add( boundBox2 );
+						scene.add( boundBox3 );
+						scene.add( boundBox4 );*/
 
 						raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 );
+						
 						// floor
-
-
 						var floorMaterial = new THREE.MeshBasicMaterial({ vertexColors: THREE.VertexColors} );
 						var floor = new THREE.Mesh( floorGeometry, floorMaterial );
 						var floorMaterial2 = new THREE.MeshBasicMaterial({ vertexColors: THREE.VertexColors} );
@@ -557,14 +585,16 @@
 					var intersections = raycaster.intersectObjects( objects);
 					var intersections2 = raycaster.intersectObjects( objects2);
 					var intersections3 = raycaster.intersectObjects( objects3);
+					var intersections4 = raycaster.intersectObjects( boundBoxes);
 					var onObject = intersections.length > 0;
 					var onObject2 = intersections2.length > 0;
 					var onObject3 = intersections3.length > 0;
+					var onObject4 = intersections4.length > 0;
 					var time = performance.now();
 					var delta = ( time - prevTime ) / 1000;
  					velocity.x -= velocity.x * 10.0 * delta;
 					velocity.z -= velocity.z * 10.0 * delta;
-					velocity.y -= 9 * 100.0 * delta; // 100.0 = mass
+					velocity.y -= 2 * 100.0 * delta; // 100.0 = mass
 					direction.z = Number( moveForward ) - Number( moveBackward );
 					direction.x = Number( moveLeft ) - Number( moveRight );
 					direction.normalize(); // this ensures consistent movements in all directions
@@ -582,6 +612,10 @@
 						velocity.y = Math.max(-7, velocity.y);
 						canJump = false;
 					}
+					if ( onObject2 === true ) {
+						velocity.y = Math.max( 0, velocity.y );
+						canJump = true;
+					}
                     //--------------------------------------------------------//
                                      //makes lava go up//
 					floorGeometry.translate(0,0.1,0);
@@ -597,6 +631,7 @@
 					} 
 					prevTime = time;
 				}
+				document.getElementById("scoreText").innerHTML = "Score: ".concat(camera.getWorldPosition().y-10);
 				renderer.render( scene, camera );
 			}
 		</script>
