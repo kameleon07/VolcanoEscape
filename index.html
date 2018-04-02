@@ -1,645 +1,525 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<title>Volcano Escape!</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<style>
-			html, body {
-				width: 100%;
-				height: 100%;
-			}
-			body {
-				background-color: #ffffff;
-				margin: 0;
-				overflow: hidden;
-				font-family: arial;
-			}
-			#blocker {
-				position: absolute;
-				width: 100%;
-				height: 100%;
-				background-color: rgba(0,0,0,0.5);
-				cursor: default;
-			}
-			#pauseScreen, #menuScreen,  #instructions {
-				position: absolute; 
-				top: 50%;
-				transform: translateY(-50%);
-				text-align: center; 
-				width: 100%; 
-			}
-			#pauseScreen, #instructions {
-				display: none;
-			}
-		 #buttons{
-		   bottom:100px;
-		}
-			.button {
-				width: 30%; 
-				color: #ff1f00; 
-				padding: 5px; 
-				font-size: 30px; 
-				margin: 0 auto; 
-				cursor: pointer;
-				margin-top: 10px;
-			}
-			.button-play {
-				background-color: #2f2f2f;
-				border: 5px #ff1f00 solid;
-			}
-			.button-leaderboard {
-				background-color: #2f2f2f;
-				border: 5px #ff1f00 solid;
-			}
-			.button-help {
-				background-color: #2f2f2f;
-				border: 5px #ff1f00 solid;
-			}
-            .button-continue{
-            	background-color: #2f2f2f;
-				border: 5px #ff1f00 solid;
+ <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Room</title>
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r75/three.js"></script>
+<script src="http://alexan0308.github.io/threejs/examples/js/loaders/OBJLoader.js"></script>
+<script src="http://alexan0308.github.io/threejs/examples/js/loaders/MTLLoader.js"></script>
+<script src="http://alexan0308.github.io/threejs/examples/js/loaders/OBJMTLLoader.js"></script>
+
+
+<script src="http://threejs.org/examples/js/controls/OrbitControls.js"></script>
+
+<div id="workspace"></div>
+<script>
+    //define global variables here
+    var container, renderer;
+    var camera, scene, projector, mouseVector, controls;
+    var mouseX, mouseY, draggable;
+    var pen, c_mesh, interactiveObj = [], rotateObj = [], groundRaycastObj = [];
+    var wallWidth = 1200;
+    var wallHeight = 400;
+    var chair_model, sofa_model;
+    var chair_selected = false;
+    var sofa_selected = false;
+
+    var raycaster;
+    var mouse = new THREE.Vector2(), INTERSECTED;
+    var radius = 100, theta = 0;
+    var oldIntersectPoint = new THREE.Vector3();
+    var newIntersectPoint = new THREE.Vector3(); 
+    var intersectOffset   = new THREE.Vector3();
+    var chairOldPosition = new THREE.Vector3();
+    var sofaOldPosition = new THREE.Vector3();
+
+    var chair_rotate = false;
+    var walls;
+    var mesh_box;
+    var wallright, wallleft, wallback, wallfront, ceiling, ground;
+    var strDownloadMime = "image/octet-stream";
+    var chairBox, sofaBox;
+    var wallrightBox, wallleftBox, wallbackBox, wallfrontBox;
+
+    init();
+    animate();
+
+    function init() {
+
+        container = document.getElementById('workspace'); //document.createElement('div');
+
+        document.body.appendChild(container);
+
+        //camera
+        //camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 10, 10000);
+       // camera.position.set(0, -wallHeight / 2 + 10, wallWidth);
+        //  camera.lookAt(new THREE.Vector3(10, 10, 10));
+
+        //renderer
+        renderer = new THREE.WebGLRenderer({preserveDrawingBuffer: true});
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(0x889988);
+        renderer.shadowMapEnabled = true;
+        container.appendChild(renderer.domElement);
+
+        scene = new THREE.Scene();
+        raycaster = new THREE.Raycaster();
+
+        var ambient = new THREE.AmbientLight(0xffffff);
+        scene.add(ambient);
+
+        camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 10000 );
+
+        camera.position.z= wallWidth;
+        camera.position.y= wallWidth/2;
+
+
+        controls = new THREE.OrbitControls( camera, renderer.domElement );
+                //controls.addEventListener( 'change', render ); // add this only if there is no animation loop (requestAnimationFrame)
+                controls.enableDamping = true;
+                controls.dampingFactor = 0.25;
+                //controls.enableZoom = false;
+
+
+
+        //walls
+        walls = new THREE.Object3D();
+
+
+        var groundGeo_2 = new THREE.PlaneGeometry(wallWidth, wallWidth); //for roof and floor
+        var groundGeo = new THREE.PlaneGeometry(wallWidth, wallHeight);
+
+        var wallTextureRight = new THREE.MeshBasicMaterial({
+            map: THREE.ImageUtils.loadTexture('textures/walls/rainbow.jpg')
+        });
+        wallTextureRight.map.needsUpdate = true;
+
+        var wallTextureLeft = new THREE.MeshBasicMaterial({
+            map: THREE.ImageUtils.loadTexture('textures/walls/rainbow.jpg')
+        });
+
+        var wallTextureFront = new THREE.MeshBasicMaterial({
+            map: THREE.ImageUtils.loadTexture('textures/walls/wall4.jpg')
+        });
+
+        var wallTextureBack = new THREE.MeshBasicMaterial({
+            map: THREE.ImageUtils.loadTexture('textures/walls/wall3.png')
+        });
+
+        var floorTexture = new THREE.MeshBasicMaterial({
+            map: THREE.ImageUtils.loadTexture('textures/walls/floor.jpg')
+        });
+        floorTexture.map.needsUpdate = true;
+
+        var ceilTexture = new THREE.MeshBasicMaterial({
+            map: THREE.ImageUtils.loadTexture('textures/walls/wall4.jpg')
+        });
+
+        ground = new THREE.Mesh(groundGeo_2, floorTexture);
+        ground.overdraw = true;
+        ground.position.set(0, 0, 0);
+        ground.rotation.x = -Math.PI / 2;
+        walls.add(ground);
+        console.log(ground);
+
+        wallleft = new THREE.Mesh(groundGeo, wallTextureLeft);
+        wallleft.overdraw = true;
+        wallleft.position.set(-wallWidth / 2, wallHeight / 2, 0);
+        wallleft.rotation.y = Math.PI / 2;
+        walls.add(wallleft);
+
+        wallleftBox = new THREE.BoundingBoxHelper( wallleft );
+        wallleftBox.update(wallleft);
+            //wallleftBox.box.min.x -= 0.1;
+        //wallleftBox.box.max.x += 0.1;
+        //scene.add(wallleftBox);
+
+        wallright = new THREE.Mesh(groundGeo, wallTextureRight);
+        wallright.overdraw = true;
+        wallright.position.set(wallWidth / 2, wallHeight / 2, 0);
+        wallright.rotation.y = -Math.PI / 2;
+        walls.add(wallright);
+
+        wallrightBox = new THREE.BoundingBoxHelper( wallright );
+        wallrightBox.update(wallright);
+            //wallrightBox.box.min.x -= 0.1;
+        //wallrightBox.box.max.x += 0.1;
+        //scene.add(wallrightBox);
+
+        wallback = new THREE.Mesh(groundGeo, wallTextureBack);
+        wallback.overdraw = true;
+        wallback.position.set(0, wallHeight / 2, -wallWidth / 2);
+        walls.add(wallback);
+
+        wallbackBox = new THREE.BoundingBoxHelper( wallback );
+        wallbackBox.update(wallback);
+        //scene.add(wallbackBox);
+
+        wallfront = new THREE.Mesh(groundGeo, wallTextureFront);
+        wallfront.overdraw = true;
+        wallfront.position.set(0, wallHeight / 2, wallWidth / 2);
+        wallfront.rotation.y = -Math.PI;
+        walls.add(wallfront);
+
+        wallfrontBox = new THREE.BoundingBoxHelper( wallfront );
+        wallfrontBox.update(wallfront);
+        //scene.add(wallfrontBox);
+
+
+
+        ceiling = new THREE.Mesh(groundGeo_2, ceilTexture);
+        ceiling.position.set(0, wallHeight, 0);
+        ceiling.rotation.x = Math.PI / 2;
+        walls.add(ceiling);
+
+        scene.add(walls);
+
+        groundRaycastObj.push(walls);
+
+        //load bed texture
+        var bed_texture = new THREE.ImageUtils.loadTexture("textures/cb-rochelle-gray_baked.png");
+        var bedMaterial = new THREE.MeshBasicMaterial({
+            map: bed_texture,
+            side: THREE.DoubleSide
+        });
+
+        //load bed
+        var loader = new THREE.JSONLoader();
+        loader.load('js/sofa.js', function (geometry) {
+            sofa_model = new THREE.Mesh(geometry, bedMaterial);
+            for (var i = 0; i < sofa_model.children.length; i++) {
+                sofa_model.children[i].material = material;
+                sofa_model.children[i].userDataParent = sofa_model;
+                sofa_model.children[i].name = 'sofa_model';
             }
-            .button-quit{
-            	background-color: #2f2f2f;
-				border: 5px #ff1f00 solid;
+            sofa_model.position.set(200,0, -200);
+            sofa_model.rotation.set(0, 0, 0);
+            sofa_model.scale.set(3, 3, 3);
+            sofa_model.name = 'sofa_model';
+            interactiveObj.push(sofa_model);
+            scene.add(sofa_model);
+
+        sofaBox = new THREE.BoundingBoxHelper( sofa_model );
+
+            // comment next line out if you don't want to see the wireframe sofa boxHelper
+            scene.add(sofaBox);
+
+        });
+
+
+         //load chair texture
+        var chair_texture = new THREE.ImageUtils.loadTexture("textures/chair.png");
+        var chairMaterial = new THREE.MeshBasicMaterial({
+            map: chair_texture,
+            side: THREE.DoubleSide
+        });
+
+        //load chair
+        var loader = new THREE.JSONLoader();
+        loader.load('js/chair_model.js', function (geometry) {
+            chair_model = new THREE.Mesh(geometry, chairMaterial);
+            for (var i = 0; i < chair_model.children.length; i++) {
+                chair_model.children[i].material = material;
+                chair_model.children[i].userDataParent = sofa_model;
+                chair_model.children[i].name = 'chair_model';
             }
-			img {
-                    padding:-100px;
-                     max-width: 100%;
-                     height: auto;	
-                     display: block;
-                     margin-left: auto;
-                     margin-right: auto;  
-                     width: 80%;
-               }
-        .keyboard-instructions{
-         	background-color: #2f2f2f;
-				border: 5px #ff1f00 solid;
-				width: 30%; 
-				color: #ff1f00; 
-				padding: 5px; 
-				font-size: 30px; 
-				margin: 0 auto; 
-				cursor: pointer;
-				margin-top: 10px;
-         }
-      #backBtn{
-      	width: 30%; 
-				color: #ff1f00; 
-				padding: 5px; 
-				font-size: 30px; 
-				margin: 0 auto; 
-				cursor: pointer;
-				margin-top: 10px;
-				background-color: #2f2f2f;
-				border: 5px #ff1f00 solid;
-      }
-      #score{
-      	position: absolute;
-	    top: 8px;
-	    right: 16px;
-	    font-size: 18px;
-      }
-		</style>
-	</head>
-	<body>
+            chair_model.position.set(-300,0, -200);
+            chair_model.rotation.set(0, 0, 0);
+            chair_model.scale.set(3, 3, 3);
+            chair_model.name = 'chair_model';
+            interactiveObj.push(chair_model);
+            scene.add(chair_model);
 
-		<script src="js/three.js"></script>
-		<script src="js/controls/controls.js"></script>
-		<script src="js/loaders/MTLLoader.js"></script>
-		<script src="js/loaders/OBJLoader.js"></script>
+        chairBox = new THREE.BoundingBoxHelper( chair_model );
 
-		<div id="blocker"></div>
+        // comment next line out if you don't want to see the wireframe chair boxHelper
+            scene.add(chairBox);
 
-		<div id="instructions">
-			
-			<p class="keyboard-instructions"> (W, A, S, D = Move, SPACE = Jump, MOUSE = Look around)</p>
-			<p class="button button-blue" id="backBtn">« Back</p>
-		</div>
-		<div id="pauseScreen">
-			<p class="button button-continue" id="continueBtn">Continue</p>
-			<p class="button button-quit" id="quitBtn">Quit</p>
-		</div>
-		<div id="menuScreen">
-			<img src="images/volcanoescape3.png" alt="volcano" height="700">  
-            <div id="buttons">
-			<p class="button button-play" id="playBtn">Play</p>		
-			<p class="button button-leaderboard" id="leaderboardBtn">Leaderboard</p>
-			<p class="button button-help" id="helpBtn">Help</p>
-		</div>
-		</div>
-		<div id="score">
-			<p id="scoreText"></p>
-		</div>
-		<script>
-			(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//rawgit.com/mrdoob/stats.js/master/build/stats.min.js';document.head.appendChild(script);})()
-
-			var audio, playbtn, music, pausebtn;
-			var rockObject;
-			var camera, scene, renderer, controls;
-			var objects = [];
-			var objects2 = [];
-			var objects3 = [];
-			var boundBoxes = [];
-			var raycaster;
-			var blocker = document.getElementById( 'blocker' );
-			var instructions = document.getElementById( 'instructions' );
-
-            var menuScreen = document.getElementById("menuScreen");
-			var pauseScreen = document.getElementById("pauseScreen");
-
-			var defPointerLockElement = document.body; 
-			var defPointerUnlockElement = document; 
-
-			defPointerLockElement.requestPointerLock = defPointerLockElement.requestPointerLock || 
-					defPointerLockElement.mozRequestPointerLock || 
-					defPointerLockElement.webkitRequestPointerLock;
-
-			
-			defPointerUnlockElement.exitPointerLock = defPointerUnlockElement.exitPointerLock ||
-					defPointerUnlockElement.mozExitPointerLock ||
-					defPointerUnlockElement.webkitExitPointerLock;
-
-			function mainMenuMusic(){
-			music = new Audio();
-			music.src = "audio/menuMusic.mp3";
-			music.loop = true;
-			music.play();
-			}
-			window.addEventListener("load", mainMenuMusic);
-		
-			function initAudioPlayer(){
-			music.muted=true;
-			audio = new Audio();
-			audio.src = "audio/gameplayMusic.mp3";
-			audio.loop = true;
-			audio.play();
-			}
-
-			function switchTrack(){
-			audio.muted=true;
-			music.muted=false;
-			}
-            playbtn = document.getElementById("playBtn");
-			playbtn.addEventListener("click", initAudioPlayer);
-			quitbtn = document.getElementById("quitBtn");
-			quitbtn.addEventListener("click", switchTrack);
-
-            document.addEventListener("click", (e) => {
-				
-				switch (e.target.id) {
-					//#region menuScreen
-					case "playBtn":
-						
-						defPointerLockElement.requestPointerLock();
-						menuScreen.style.display = "none";
-						break;
-					case "leaderboardBtn":
-						alert("implement me Yiannis!");
-						break;
-					case "helpBtn":
-						
-						instructions.style.display = "block";
-						menuScreen.style.display = "none";
-						break;
-					case "backBtn":
-						
-						instructions.style.display = "none";
-						menuScreen.style.display = "block";
-						break;
-					
-
-					case "continueBtn":
-						
-						defPointerLockElement.requestPointerLock();
-						break;
-					case "quitBtn":
-						defPointerUnlockElement.exitPointerLock();
-						menuScreen.style.display = "block";
-						blocker.style.display = "block";
-						pauseScreen.style.display = "none";		
-				}
-			});
-
-			// http://www.html5rocks.com/en/tutorials/pointerlock/intro/
-			var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
-			if ( havePointerLock ) {
-				var element = document.body;
-				var pointerlockchange = function ( event ) {
-					if ( document.pointerLockElement === element || document.mozPointerLockElement === element || document.webkitPointerLockElement === element ) {
-						controlsEnabled = true;
-						controls.enabled = true;
-						blocker.style.display = 'none';
-						pauseScreen.style.display = 'none';
-					} else {
-						controls.enabled = false;
-						blocker.style.display = 'block';
-						instructions.style.display = '';
-						pauseScreen.style.display = 'block';
-					}
-				};
-				var pointerlockerror = function ( event ) {
-					instructions.style.display = '';
-				};
-				// Hook pointer lock state change events
-				document.addEventListener( 'pointerlockchange', pointerlockchange, false );
-				document.addEventListener( 'mozpointerlockchange', pointerlockchange, false );
-				document.addEventListener( 'webkitpointerlockchange', pointerlockchange, false );
-				document.addEventListener( 'pointerlockerror', pointerlockerror, false );
-				document.addEventListener( 'mozpointerlockerror', pointerlockerror, false );
-				document.addEventListener( 'webkitpointerlockerror', pointerlockerror, false );
-				instructions.addEventListener( 'click', function ( event ) {
-					instructions.style.display = 'none';
-					// Ask the browser to lock the pointer
-					element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
-					element.requestPointerLock();
-				}, false );
-			} else {
-				instructions.innerHTML = 'Your browser doesn\'t seem to support Pointer Lock API';
-			}
-			
-			var onProgress = function ( xhr ) {
-				if ( xhr.lengthComputable ) {
-					var percentComplete = xhr.loaded / xhr.total * 100;
-					console.log( Math.round(percentComplete, 2) + '% downloaded' );
-				}
-			};
-			var onError = function ( xhr ) { };
-			
-			function spawnRockObject(x,y,z){
-				rockObject.position.x = x;
-				rockObject.position.y = y;
-				rockObject.position.z = z;
-				rockObject.castShadow = true;
-				rockObject.scale.set( 5, 5, 5 )
-				rockObject.receiveShadow = true;
-				scene.add( rockObject );
-			}
-
-		
-			
-			init();
-			
-			var controlsEnabled = false;
-			var moveForward = false;
-			var moveBackward = false;
-			var moveLeft = false;
-			var moveRight = false;
-			var canJump = false;
-			var prevTime = performance.now();
-			var velocity = new THREE.Vector3();
-			var direction = new THREE.Vector3();
-            var floorGeometry;
-            var floorGeometry2;
-            var wallGeometry;
-            var wallGeometry2;
-            var wallGeometry3;
-            var wallGeometry4;
-			function init() {
-				var mtlLoader = new THREE.MTLLoader();
-				mtlLoader.load( 'models/Rock1.mtl', function( materials ) {
-					materials.preload();
-					var objLoader = new THREE.OBJLoader();
-					objLoader.setMaterials( materials );
-					objLoader.load( 'models/Rock1.obj', function ( object ) {
-						camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 350 );
-						scene = new THREE.Scene();
-						scene.background = new THREE.Color( 0x660000 );
-						scene.fog = new THREE.Fog( 0x800000, 0, 200 );
-						var light = new THREE.HemisphereLight( 0xeeeeff, 0x53535f, 0.75 );
-						light.position.set( 0.5, 1, 0.75 );
-						scene.add( light );
-						controls = new THREE.PointerLockControls( camera );
-						scene.add( controls.getObject() );
-						var onKeyDown = function ( event ) {
-							switch ( event.keyCode ) {
-								case 38: // up
-								case 87: // w
-									moveForward = true;
-									break;
-								case 37: // left
-								case 65: // a
-									moveLeft = true; break;
-								case 40: // down
-								case 83: // s
-									moveBackward = true;
-									break;
-								case 39: // right
-								case 68: // d
-									moveRight = true;
-									break;
-								case 32: // space
-									if ( canJump === true ) velocity.y += 90;
-									canJump = false;
-									break;
-							}
-						};
-						var onKeyUp = function ( event ) {
-							switch( event.keyCode ) {
-								case 38: // up
-								case 87: // w
-									moveForward = false;
-									break;
-								case 37: // left
-								case 65: // a
-									moveLeft = false;
-									break;
-								case 40: // down
-								case 83: // s
-									moveBackward = false;
-									break;
-								case 39: // right
-								case 68: // d
-									moveRight = false;
-									break;
-							}
-						};
-
-		                
-						document.addEventListener( 'keydown', onKeyDown, false );
-						document.addEventListener( 'keyup', onKeyUp, false );
-
-		                //----------------------------------------------------------------//
-		                // floor and cubes//
-		                //----------------------------------------------------------------//
-
-                wallGeometry = new THREE.PlaneGeometry( 300, 10000, 360,160 );
-
-                for ( var i = 0, l = wallGeometry.vertices.length; i < l; i ++ ) {
-					var vertex = wallGeometry.vertices[ i ];
-					vertex.x += Math.random() * 30 - 5;
-					vertex.y += Math.random() * 3 + 5000;
-					vertex.z += Math.random() * 30 + 70;
-
-				}   
-				wallGeometry2 = new THREE.PlaneGeometry( 300, 10000, 360,160 );
-                wallGeometry2.rotateY( - Math.PI / 2 );
-                for ( var i = 0, l = wallGeometry2.vertices.length; i < l; i ++ ) {
-					var vertex = wallGeometry2.vertices[ i ];
-					vertex.x += Math.random() * 30 - 95;
-					vertex.y += Math.random() * 3 + 5000;
-					vertex.z += Math.random() * 30 - 5;
-
-				}
-               wallGeometry3 = new THREE.PlaneGeometry( 300, 10000, 360,160 );
-
-                for ( var i = 0, l = wallGeometry3.vertices.length; i < l; i ++ ) {
-					var vertex = wallGeometry3.vertices[ i ];
-			        vertex.x += Math.random() * 30 - 5;
-					vertex.y += Math.random() * 3 + 5000;
-					vertex.z += Math.random() * 30 - 80;
-
-				}
-                  wallGeometry4 = new THREE.PlaneGeometry( 300, 10000, 360,160 );
-                  wallGeometry4.rotateY( - Math.PI / 2 );
-                for ( var i = 0, l = wallGeometry4.vertices.length; i < l; i ++ ) {
-					var vertex = wallGeometry4.vertices[ i ];
-				    vertex.x += Math.random() * 30 + 70;
-					vertex.y += Math.random() * 3 + 5000;
-					vertex.z += Math.random() * 30 - 5;
-
-				}
-
-		        floorGeometry = new THREE.PlaneGeometry( 200, 200, 70, 70 );
-				floorGeometry.rotateX( - Math.PI / 2 );
-
-				for ( var i = 0, l = floorGeometry.vertices.length; i < l; i ++ ) {
-
-				var vertex = floorGeometry.vertices[ i ];
-				vertex.x += Math.random() * 15 - 10;
-				vertex.y += Math.random() * 5;
-				vertex.z += Math.random() * 15 - 10;
-			   }
-
-			   for ( var i = 0, l = floorGeometry.faces.length; i < l; i ++ ) {
-						var face4 = floorGeometry.faces[ i ];
-						face4.vertexColors[ 0 ] = new THREE.Color(0xD2691E);
-						face4.vertexColors[ 1 ] = new THREE.Color(0xE60000);
-						face4.vertexColors[ 2 ] = new THREE.Color(0x661400);
-					}
-
-			    floorGeometry2 = new THREE.PlaneGeometry( 200, 200, 30, 30 );
-				floorGeometry2.rotateX( - Math.PI / 2 );
-
-				for ( var i = 0, l = floorGeometry2.vertices.length; i < l; i ++ ) {
-
-				var vertex2 = floorGeometry2.vertices[ i ];
-				vertex2.x += Math.random() * 15 - 10;
-				vertex2.y += Math.random() * 1;
-				vertex2.z += Math.random() * 15 - 10;
-			   }
-
-			   for ( var i = 0, l = floorGeometry2.faces.length; i < l; i ++ ) {
-						var face5 = floorGeometry2.faces[ i ];
-						face5.vertexColors[ 0 ] = new THREE.Color(0x615D5A);
-						face5.vertexColors[ 1 ] = new THREE.Color(0x803E00);
-						face5.vertexColors[ 2 ] = new THREE.Color(0x000000);
-					}
-
-
-				 var boxGeometry = new THREE.BoxGeometry( 12, 1, 12);
-				for ( var i = 0, l = floorGeometry.faces.length; i < l; i ++ ) {
-				var face1 = floorGeometry.faces[ i ];
-				}
-				 var boxGeometry2 = new THREE.BoxGeometry( 23, 1, 23);
-				for ( var i = 0, l = floorGeometry.faces.length; i < l; i ++ ) {
-				var face2 = floorGeometry.faces[ i ];
-				}
-				var boxGeometry3 = new THREE.BoxGeometry( 16, 1, 16);
-				for ( var i = 0, l = floorGeometry.faces.length; i < l; i ++ ) {
-				var face3 = floorGeometry.faces[ i ];
-				}
-		
-						var wallMaterial = new THREE.MeshBasicMaterial({ color: 0xD2691E,  specular: 0xFFFFFF, flatShading: true} );
-						var wall = new THREE.Mesh( wallGeometry, wallMaterial );
-						var wall2 = new THREE.Mesh( wallGeometry2, wallMaterial );
-						var wall3 = new THREE.Mesh( wallGeometry3, wallMaterial );
-						var wall4 = new THREE.Mesh( wallGeometry4, wallMaterial );
-						scene.add(wall, wall2, wall3, wall4);
-
-						// objects
-						var boxMaterial = new THREE.MeshPhongMaterial({color:0xff0000, transparent:true, opacity:0, side: THREE.DoubleSide});
-						for ( var i = 0; i < 600; i ++ ) {
-							//boxMaterial.color.setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
-
-							var box = new THREE.Mesh( boxGeometry, boxMaterial );
-							var randomXPos = Math.floor( Math.random() * 20 - 10 ) * 7;
-							var randomYPos = Math.floor( Math.random() * 600 ) * 20 + 10;
-							var randomZPos = Math.floor( Math.random() * 20 - 10 ) * 7;
-							box.position.x = randomXPos;
-							box.position.y = randomYPos;
-							box.position.z = randomZPos;
-							var object2 = object.clone();
-							object2.position.x = randomXPos;
-							object2.position.y = randomYPos-6;
-							object2.position.z = randomZPos;
-							object2.castShadow = true;
-							object2.scale.set( 4, 4, 4 )
-							object2.receiveShadow = true;
-							object2.visible = true;
-							scene.add( object2 );
-							scene.add( box );
-							objects.push( box );
-						}
-					      
-	                    var boxMaterial2 = new THREE.MeshPhongMaterial({color:0xff0000, transparent:true, opacity:0, side: THREE.DoubleSide});
-						for ( var i = 0; i < 1400; i ++ ) {
-
-							var box2 = new THREE.Mesh( boxGeometry2, boxMaterial2 );
-							var randomXPos = Math.floor( Math.random() * 20 - 10 ) * 7;
-							var randomYPos = Math.floor( Math.random() * 600 ) * 20 + 10;
-							var randomZPos = Math.floor( Math.random() * 20 - 10 ) * 7;
-							box2.position.x = randomXPos;
-							box2.position.y = randomYPos;
-							box2.position.z = randomZPos;
-							var object3 = object.clone();
-							object3.position.x = randomXPos;
-							object3.position.y = randomYPos-12;
-							object3.position.z = randomZPos;
-							object3.castShadow = true;
-							object3.scale.set( 8, 8, 8 )
-							object3.receiveShadow = true;
-							object3.visible = true;
-							scene.add( object3 );
-							scene.add( box2 );
-							objects2.push( box2 );
-						}
-
-						var boxMaterial3 = new THREE.MeshPhongMaterial({color:0xff0000, transparent:true, opacity:0, side: THREE.DoubleSide});
-						for ( var i = 0; i < 400; i ++ ) {
-							//boxMaterial.color.setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
-
-							var box3 = new THREE.Mesh( boxGeometry3, boxMaterial3 );
-							var randomXPos = Math.floor( Math.random() * 20 - 10 ) * 7;
-							var randomYPos = Math.floor( Math.random() * 600 ) * 20 + 10;
-							var randomZPos = Math.floor( Math.random() * 20 - 10 ) * 7;
-							box3.position.x = randomXPos;
-							box3.position.y = randomYPos;
-							box3.position.z = randomZPos;
-							var object4 = object.clone();
-							object4.position.x = randomXPos;
-							object4.position.y = randomYPos-8;
-							object4.position.z = randomZPos;
-							object4.castShadow = true;
-							object4.scale.set( 6, 6, 6 )
-							object4.receiveShadow = true;
-							object4.visible = true;
-							scene.add( object4 );
-							scene.add( box3 );
-							objects3.push( box3 );
-						}
+        });
 
 
 
-                        var box10 = new THREE.BoxHelper( wall, 0xffff00 );
-                        scene.add( box10 );
-                        var updatedBox = box10.update;
-						//----------------------------------------------------------------//
-						//****** Why the fuck can I still walk through that cube?   ******//
+        //IE, Chrome, Safari, Opera
+        document.addEventListener('mousewheel', onDocumentMouseWheel, false);
+        //Firefox
+        document.addEventListener('DOMMouseScroll', onDocumentMouseWheel, false);
+        document.addEventListener('mousemove', onDocumentMouseMove, false);
+        document.addEventListener('mousedown', onDocumentMouseDown, false);
+        document.addEventListener('mouseup', onDocumentMouseUp, false);
+        window.addEventListener('resize', onWindowResize, false);
 
-						/*var boundBox1G = new THREE.BoxGeometry( 23, 23, 23);
-						var boundBox1M = new THREE.MeshPhongMaterial({color:0xff0000, side: THREE.DoubleSide});
-						var boundBox1 = new THREE.Mesh( boundBox1G, boundBox1M );
-						boundBox1.position.x = 10;
-						boundBox1.position.y = 10;
-						boundBox1.position.z = 10;
-						scene.add( boundBox1 );
-						boundBoxes.push( boundBox1 );
-                        */
-						// some tests
-						/*var boundBox1 = new THREE.Box3().setFromObject(wall);
-						var boundBox2 = new THREE.Box3().setFromObject(wall2);
-						var boundBox3 = new THREE.Box3().setFromObject(wall3);
-						var boundBox4 = new THREE.Box3().setFromObject(wall4);
-						scene.add( boundBox1 );
-						scene.add( boundBox2 );
-						scene.add( boundBox3 );
-						scene.add( boundBox4 );*/
+    }
+    function animate() {
 
-						raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 );
-						
-						// floor
-						var floorMaterial = new THREE.MeshBasicMaterial({ vertexColors: THREE.VertexColors} );
-						var floor = new THREE.Mesh( floorGeometry, floorMaterial );
-						var floorMaterial2 = new THREE.MeshBasicMaterial({ vertexColors: THREE.VertexColors} );
-						var floor2 = new THREE.Mesh( floorGeometry2, floorMaterial2 );
-						scene.add( floor, floor2 );
-						//
-						renderer = new THREE.WebGLRenderer();
-						renderer.setPixelRatio( window.devicePixelRatio );
-						renderer.setSize( window.innerWidth, window.innerHeight );
-						document.body.appendChild( renderer.domElement );
-						//
-						window.addEventListener( 'resize', onWindowResize, false );
+        requestAnimationFrame(animate);
 
-						animate();
-					}, onProgress, onError );
-				});
+        chair_model.rotation.y += 0.02;
 
-			}
-			function onWindowResize() {
-				camera.aspect = window.innerWidth / window.innerHeight;
-				camera.updateProjectionMatrix();
-				renderer.setSize( window.innerWidth, window.innerHeight );
-			}
-			function animate() {
-				requestAnimationFrame( animate );
-				if ( controlsEnabled === true ) {
-					raycaster.ray.origin.copy( controls.getObject().position );
-					raycaster.ray.origin.y -= 10;
-					var intersections = raycaster.intersectObjects( objects);
-					var intersections2 = raycaster.intersectObjects( objects2);
-					var intersections3 = raycaster.intersectObjects( objects3);
-					//var intersections4 = raycaster.intersectObjects( boundBoxes);
-					var onObject = intersections.length > 0;
-					var onObject2 = intersections2.length > 0;
-					var onObject3 = intersections3.length > 0;
-					//var onObject4 = intersections4.length > 0;
-					var time = performance.now();
-					var delta = ( time - prevTime ) / 1000;
- 					velocity.x -= velocity.x * 10.0 * delta;
-					velocity.z -= velocity.z * 10.0 * delta;
-					velocity.y -= 2 * 100.0 * delta; // 100.0 = mass
-					direction.z = Number( moveForward ) - Number( moveBackward );
-					direction.x = Number( moveLeft ) - Number( moveRight );
-					direction.normalize(); // this ensures consistent movements in all directions
-					if ( moveForward || moveBackward ) velocity.z -= direction.z * 400.0 * delta;
-					if ( moveLeft || moveRight ) velocity.x -= direction.x * 400.0 * delta;
-					if ( onObject === true ) {
-						velocity.y = 400
-						canJump = false;
-					}
-					if ( onObject2 === true ) {
-						velocity.y = Math.max( 0, velocity.y );
-						canJump = true;
-					}
-					if ( onObject3 === true ) {
-						velocity.y = Math.max(-7, velocity.y);
-						canJump = false;
-					}
-					/*if ( onObject4 === true ) {
-						velocity.y = Math.max( 0, velocity.y );
-						canJump = true;
-					}*/
-                    //--------------------------------------------------------//
-                                     //makes lava go up//
-					floorGeometry.translate(0,0.1,0);
-					//---------------------------------------------------------//
-					controls.getObject().translateX( velocity.x * delta );
-					controls.getObject().translateY( velocity.y * delta );
-					controls.getObject().translateZ( velocity.z * delta );
+    chairBox.update(chair_model);
+    sofaBox.update(sofa_model);
+    //wallrightBox.update(wallright);
+    //wallleftBox.update(wallleft);
+    //wallfrontBox.update(wallfront);
+    //wallbackBox.update(wallback);
 
-					if ( controls.getObject().position.y < 10 ) {
-						velocity.y = 0;
-						controls.getObject().position.y = 10;
-						canJump = true;
-					} 
-					prevTime = time;
-				}
-				document.getElementById("scoreText").innerHTML = "Score: ".concat(camera.getWorldPosition().y-10);
-				renderer.render( scene, camera );
-			}
-		</script>
-	</body>
+
+
+        controls.update();
+
+        // Render the frame
+        //Don't render twice, it will slow down your animation!
+        //render();
+        renderer.render(scene, camera);
+
+    }
+
+    function render() {
+
+        renderer.render(scene, camera);
+    }
+
+
+
+    function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        //controls.handleResize();
+
+    }
+
+    function onDocumentMouseDown(event) {
+        draggable = true;
+        event.preventDefault();
+
+    var testIntersects;
+        testIntersects = raycaster.intersectObjects(groundRaycastObj, true);
+        if (testIntersects.length > 0)
+            oldIntersectPoint.copy(testIntersects[0].point);
+
+        // find intersections
+        raycaster.setFromCamera(mouse, camera);
+        var intersects = raycaster.intersectObjects(interactiveObj, true);
+        if (intersects.length > 0) {
+            controls.enabled=false;
+
+            if (intersects[0].object.name == 'chair_model') {
+                container.style.cursor = 'pointer';
+                chair_selected = true;
+            //oldIntersectPoint.copy(chair_model.position);
+        chairBox.material.color.set('white');
+            } else if (intersects[0].object.name == 'sofa_model') {
+                container.style.cursor = 'pointer';
+                sofa_selected = true;
+            //oldIntersectPoint.copy(sofa_model.position);
+        sofaBox.material.color.set('white');
+            }
+            else {
+                chair_selected = false;
+                sofa_selected = false;
+            }
+            draggable = false;
+        }
+
+    }
+
+    function onDocumentMouseUp(event) {
+        draggable = false;
+        chair_selected = false;
+        sofa_selected = false;
+        chair_rotate = false;
+        container.style.cursor = 'auto';
+        controls.enabled=true;
+
+    oldIntersectPoint.set(0,0,0);
+    newIntersectPoint.set(0,0,0);
+        intersectOffset.set(0,0,0);
+
+    chairBox.material.color.set('grey');
+    sofaBox.material.color.set('grey');
+    }
+
+
+    function onDocumentMouseMove(event) {
+
+        mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+        mouse.y = -( event.clientY / window.innerHeight ) * 2 + 1;
+
+        var deltaX = event.clientX - mouseX;
+        var deltaY = event.clientY - mouseY;
+
+        var testIntersects;
+
+        raycaster.setFromCamera(mouse, camera);
+        var intersects = raycaster.intersectObjects(interactiveObj, true);
+
+        if (intersects.length > 0) {
+            container.style.cursor = 'pointer';
+            //addRotationLine(intersects[0].object);
+
+        } else {
+            container.style.cursor = 'auto';
+        }
+
+        if (draggable) {
+
+        } else if (chair_selected == true) {
+
+                testIntersects = raycaster.intersectObjects(groundRaycastObj, true);
+                if (testIntersects.length > 0) {
+
+            var okToMove = true;
+
+            chairOldPosition.copy(chair_model.position);
+
+            newIntersectPoint.copy(testIntersects[0].point);
+
+            intersectOffset.copy(newIntersectPoint);
+                intersectOffset.sub(oldIntersectPoint);
+            //uncomment below if you want more precision mouse movements of objects
+            //intersectOffset.multiplyScalar(0.1);
+            // store old intersect point for next frame
+            oldIntersectPoint.copy(newIntersectPoint);
+
+                        chair_model.position.add(intersectOffset);
+            chair_model.updateMatrixWorld(true);
+            //chairBox.updateMatrixWorld(true);
+            chairBox.update(chair_model);
+
+            // default
+            chairBox.material.color.set('white');   
+
+            if( chairBox.box.intersectsBox(sofaBox.box) ) {
+                okToMove = false;
+                chairBox.material.color.set('red');
+            }
+            else if( chairBox.box.intersectsBox(wallrightBox.box) ) {
+                okToMove = false;
+                chairBox.material.color.set('red');
+            }
+            else if( chairBox.box.intersectsBox(wallleftBox.box) ) {
+                okToMove = false;
+                chairBox.material.color.set('red');
+            }
+            else if( chairBox.box.intersectsBox(wallfrontBox.box) ) {
+                okToMove = false;
+                chairBox.material.color.set('red');
+            }
+            else if( chairBox.box.intersectsBox(wallbackBox.box) ) {
+                okToMove = false;
+                chairBox.material.color.set('red');
+            }
+
+            // if NOT ok to move and chair is hitting something,
+            if ( !okToMove ) {
+                // put chair back where it was
+                chair_model.position.copy(chairOldPosition);
+            }
+
+
+                }
+                // clamp chair position to the ground
+                chair_model.position.y = 0;
+
+        } else if (chair_rotate == true) {
+            rotate_object(chair_model, event);
+        }
+        else if (sofa_selected == true) {
+            testIntersects = raycaster.intersectObjects(groundRaycastObj, true);
+                if (testIntersects.length > 0) {
+
+            var okToMove = true;
+
+            sofaOldPosition.copy(sofa_model.position);
+
+            newIntersectPoint.copy(testIntersects[0].point);
+
+            intersectOffset.copy(newIntersectPoint);
+                intersectOffset.sub(oldIntersectPoint);
+            //uncomment below if you want more precision mouse movements of objects
+            //intersectOffset.multiplyScalar(0.1);
+                    oldIntersectPoint.copy(newIntersectPoint);
+                        sofa_model.position.add(intersectOffset);
+
+            sofa_model.updateMatrixWorld(true);
+            //sofaBox.updateMatrixWorld(true);
+            sofaBox.update(sofa_model);
+
+            // default
+            sofaBox.material.color.set('white');    
+
+            if( sofaBox.box.intersectsBox(chairBox.box) ) {
+                okToMove = false;
+                sofaBox.material.color.set('red');
+            }
+            else if( sofaBox.box.intersectsBox(wallrightBox.box) ) {
+                okToMove = false;
+                sofaBox.material.color.set('red');
+            }
+            else if( sofaBox.box.intersectsBox(wallleftBox.box) ) {
+                okToMove = false;
+                sofaBox.material.color.set('red');
+            }
+            else if( sofaBox.box.intersectsBox(wallfrontBox.box) ) {
+                okToMove = false;
+                sofaBox.material.color.set('red');
+            }
+            else if( sofaBox.box.intersectsBox(wallbackBox.box) ) {
+                okToMove = false;
+                sofaBox.material.color.set('red');
+            }
+
+            // if NOT ok to move and sofa is hitting something,
+            if ( !okToMove ) {
+                // put sofa back where it was
+                sofa_model.position.copy(sofaOldPosition);
+            }
+
+                }
+                // clamp sofa position to the ground
+                sofa_model.position.y = 0;
+        }
+        mouseX = event.clientX;
+        mouseY = event.clientY;
+        //render(); // no need to render
+    }
+
+    function onDocumentMouseWheel(event) {
+        // This is automatically handled for you by orbitControls.js, 
+        // but you can't disable zoom on the controls - so don't type controls.enableZoom = false;
+
+        //mouseDelta = (-event.wheelDeltaY || event.detail);
+        //camera.position.z += mouseDelta * 1;
+        //render(); // no need to render
+    }
+
+    function addRotationLine(objModel) {
+        var material = new THREE.LineBasicMaterial({
+            color: 0x0000ff,
+            linewidth: 6
+        });
+        var geometry = new THREE.Geometry();
+        geometry.vertices.push(
+                new THREE.Vector3(-10, 500, 0),
+                new THREE.Vector3(1000, 500, 0)
+        );
+        var line = new THREE.Line(geometry, material);
+        objModel.add(line);
+    }
+    function rotate_object(object, event) {
+        mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+        mouse.y = -( event.clientY / window.innerHeight ) * 2 + 1;
+        var deltaX = event.clientX - mouseX;
+        var deltaY = event.clientY - mouseY;
+
+        object.rotation.y += deltaX * 0.02;
+        object.rotation.y += deltaY * 0.01;
+    }
+
+
+</script>
+</body>
 </html>
