@@ -457,8 +457,7 @@
 						var wall3 = new THREE.Mesh( wallGeometry3, wallMaterial );
 						var wall4 = new THREE.Mesh( wallGeometry4, wallMaterial );
 						scene.add(wall, wall2, wall3, wall4);
-                        var box10 = new THREE.BoxHelper( wall3 );
-                        scene.add( box10 );
+
 						// objects
 						var boxMaterial = new THREE.MeshPhongMaterial({color:0xff0000, transparent:true, opacity:0, side: THREE.DoubleSide});
 						for ( var i = 0; i < 600; i ++ ) {
@@ -531,6 +530,10 @@
 							objects3.push( box3 );
 						}
 
+
+
+                        var box10 = new THREE.BoxHelper( wall, 0xffff00 );
+                        scene.add( box10 );
 						//----------------------------------------------------------------//
 						//****** Why the fuck can I still walk through that cube?   ******//
 
