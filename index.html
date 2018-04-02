@@ -606,10 +606,10 @@
 					var intersections3 = raycaster.intersectObjects( objects3);
 					var intersections4 = raycaster.intersectObject(wallleftBox);
 					//var intersections4 = raycaster.intersectObjects( boundBoxes);
-					var onObject = intersections.manhattanLength > 0;
-					var onObject2 = intersections2.manhattanLength > 0;
-					var onObject3 = intersections3.manhattanLength > 0;
-					var onObject4 = intersections4.manhattanLength > 0;
+					var onObject = intersections.lengthSq > 0;
+					var onObject2 = intersections2.lengthSq > 0;
+					var onObject3 = intersections3.lengthSq > 0;
+					var onObject4 = intersections4.lengthSq > 0;
 					//var onObject4 = intersections4.length > 0;
 					var time = performance.now();
 					var delta = ( time - prevTime ) / 1000;
