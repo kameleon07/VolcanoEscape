@@ -462,7 +462,9 @@
 
                        wallleftBox = new THREE.BoundingBoxHelper( wall );
                         wallleftBox.update(wall);
-
+                            wallleftBox.box.min.x -= 0.1;
+				        wallleftBox.box.max.x += 0.1;
+				        scene.add(wallleftBox);
 
 
 
