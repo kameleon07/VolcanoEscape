@@ -606,6 +606,7 @@
 					direction.normalize(); // this ensures consistent movements in all directions
 					if ( moveForward || moveBackward ) velocity.z -= direction.z * 400.0 * delta;
 					if ( moveLeft || moveRight ) velocity.x -= direction.x * 400.0 * delta;
+			
 					if ( onObject === true ) {
 						velocity.y = 400
 						canJump = false;
@@ -640,7 +641,7 @@
 					if ( controls.getObject().position.y < 10 ) {
 						velocity.y = 0;
 						controls.getObject().position.y = 10;
-						canJump = true;
+						velocity.y -= 1 * 100.0 * delta;
 					} 
 					prevTime = time;
 				}
