@@ -641,7 +641,7 @@
 					if ( controls.getObject().position.y < 10 ) {
 						velocity.y = 0;
 						controls.getObject().position.y = 10;
-						velocity.y -= 1 * 100.0 * delta;
+						canJump = true;
 					} 
 					prevTime = time;
 				}
