@@ -557,8 +557,8 @@
 						scene.add( boundBox3 );
 						scene.add( boundBox4 );*/
 
-						raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, 1, 0 ), 0, 10 );
 						
+						raycaster = new THREE.Vector3( 0, 1, 0 )
 						// floor
 						var floorMaterial = new THREE.MeshBasicMaterial({ vertexColors: THREE.VertexColors} );
 						var floor = new THREE.Mesh( floorGeometry, floorMaterial );
