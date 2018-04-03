@@ -595,7 +595,7 @@
 					var onObject = intersections.length > 0;
 					var onObject2 = intersections2.length > 0;
 					var onObject3 = intersections3.length > 0;
-					var onObject4 = intersections4.length > 0;
+					var onObject4 = intersections4.length > (camera.getWorldPosition().y-10);
 					var time = performance.now();
 					var delta = ( time - prevTime ) / 1000;
  					velocity.x -= velocity.x * 10.0 * delta;
