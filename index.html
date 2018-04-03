@@ -606,7 +606,16 @@
 					direction.normalize(); // this ensures consistent movements in all directions
 					if ( moveForward || moveBackward ) velocity.z -= direction.z * 400.0 * delta;
 					if ( moveLeft || moveRight ) velocity.x -= direction.x * 400.0 * delta;
+
+
+
 					
+					if ( onObject2 === true ) {
+						velocity.y = Math.max( 0, velocity.y );
+						canJump = true;
+					}
+					
+
 					if ( onObject4 === true ) {
 					   if (moveForward == true){
 					   velocity.z = 200;
