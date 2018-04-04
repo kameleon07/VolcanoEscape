@@ -135,7 +135,7 @@
 		<script>
 			(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//rawgit.com/mrdoob/stats.js/master/build/stats.min.js';document.head.appendChild(script);})()
 
-			var box10;
+			var box9, box8, box7, box10;
 			var audio, playbtn, music, pausebtn;
 			var rockObject;
 			var camera, scene, renderer, controls;
@@ -534,14 +534,18 @@
 
 
 
-                        box10 = new THREE.BoxHelper.update( wall, 0xffff00 );
+                        box10 = new THREE.BoxHelper( wall, 0xffff00 );
+                        box10.update(wall);
                         scene.add( box10 );
                         box9 = new THREE.BoxHelper.update( wall2, 0xffff00 );
+                        box9.update(wall2);
                         scene.add( box9 );
                         box8 = new THREE.BoxHelper.update( wall3, 0xffff00 );
+                        box8.update(wall3);
                         scene.add( box8 );
                         box7 = new THREE.BoxHelper.update( wall4, 0xffff00 );
-                        scene.add( box7 );
+                         box7.update(wall4);
+                        scene.add( box10, box9, box8, box7 );
 						//----------------------------------------------------------------//
 						//****** Why the fuck can I still walk through that cube?   ******//
 
