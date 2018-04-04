@@ -373,6 +373,7 @@
 					vertex.y += Math.random() * 3 + 5000;
 					vertex.z += Math.random() * 30 + 70;               
 				}   
+			
 
 				wallGeometry2 = new THREE.PlaneGeometry( 300, 10000, 360,160 );
                 wallGeometry2.rotateY( - Math.PI / 2 );
@@ -533,13 +534,13 @@
 
 
 
-                        box10 = new THREE.BoxHelper( wall, 0xffff00 );
+                        box10 = new THREE.BoxHelper.update( wall, 0xffff00 );
                         scene.add( box10 );
-                        box9 = new THREE.BoxHelper( wall2, 0xffff00 );
+                        box9 = new THREE.BoxHelper.update( wall2, 0xffff00 );
                         scene.add( box9 );
-                        box8 = new THREE.BoxHelper( wall3, 0xffff00 );
+                        box8 = new THREE.BoxHelper.update( wall3, 0xffff00 );
                         scene.add( box8 );
-                        box7 = new THREE.BoxHelper( wall4, 0xffff00 );
+                        box7 = new THREE.BoxHelper.update( wall4, 0xffff00 );
                         scene.add( box7 );
 						//----------------------------------------------------------------//
 						//****** Why the fuck can I still walk through that cube?   ******//
