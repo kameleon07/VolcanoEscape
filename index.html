@@ -134,7 +134,6 @@
 		</div>
 		<script>
 			(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//rawgit.com/mrdoob/stats.js/master/build/stats.min.js';document.head.appendChild(script);})()
-
 			var box9, box8, box7, box10;
 			var audio, playbtn, music, pausebtn;
 			var rockObject;
@@ -146,22 +145,17 @@
 			var raycaster;
 			var blocker = document.getElementById( 'blocker' );
 			var instructions = document.getElementById( 'instructions' );
-
             var menuScreen = document.getElementById("menuScreen");
 			var pauseScreen = document.getElementById("pauseScreen");
-
 			var defPointerLockElement = document.body; 
 			var defPointerUnlockElement = document; 
-
 			defPointerLockElement.requestPointerLock = defPointerLockElement.requestPointerLock || 
 					defPointerLockElement.mozRequestPointerLock || 
 					defPointerLockElement.webkitRequestPointerLock;
-
 			
 			defPointerUnlockElement.exitPointerLock = defPointerUnlockElement.exitPointerLock ||
 					defPointerUnlockElement.mozExitPointerLock ||
 					defPointerUnlockElement.webkitExitPointerLock;
-
 			function mainMenuMusic(){
 			music = new Audio();
 			music.src = "audio/menuMusic.mp3";
@@ -177,7 +171,6 @@
 			audio.loop = true;
 			audio.play();
 			}
-
 			function switchTrack(){
 			audio.muted=true;
 			music.muted=false;
@@ -186,7 +179,6 @@
 			playbtn.addEventListener("click", initAudioPlayer);
 			quitbtn = document.getElementById("quitBtn");
 			quitbtn.addEventListener("click", switchTrack);
-
             document.addEventListener("click", (e) => {
 				
 				switch (e.target.id) {
@@ -210,7 +202,6 @@
 						menuScreen.style.display = "block";
 						break;
 					
-
 					case "continueBtn":
 						
 						defPointerLockElement.requestPointerLock();
@@ -222,7 +213,6 @@
 						pauseScreen.style.display = "none";		
 				}
 			});
-
 			// http://www.html5rocks.com/en/tutorials/pointerlock/intro/
 			var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
 			if ( havePointerLock ) {
@@ -277,7 +267,6 @@
 				rockObject.receiveShadow = true;
 				scene.add( rockObject );
 			}
-
 		
 			
 			init();
@@ -356,17 +345,14 @@
 									break;
 							}
 						};
-
 		                
 						document.addEventListener( 'keydown', onKeyDown, false );
 						document.addEventListener( 'keyup', onKeyUp, false );
-
 		                //----------------------------------------------------------------//
 		                // floor and cubes//
 		                //----------------------------------------------------------------//
                 
                 wallGeometry = new THREE.PlaneGeometry( 300, 10000, 360,160 );
-
                 for ( var i = 0, l = wallGeometry.vertices.length; i < l; i ++ ) {
 					var vertex = wallGeometry.vertices[ i ];
 					vertex.x += Math.random() * 30 - 5;
@@ -374,7 +360,6 @@
 					vertex.z += Math.random() * 30 + 70;               
 				}   
 			
-
 				wallGeometry2 = new THREE.PlaneGeometry( 300, 10000, 360,160 );
                 wallGeometry2.rotateY( - Math.PI / 2 );
                 for ( var i = 0, l = wallGeometry2.vertices.length; i < l; i ++ ) {
@@ -382,16 +367,13 @@
 					vertex.x += Math.random() * 30 - 95;
 					vertex.y += Math.random() * 3 + 5000;
 					vertex.z += Math.random() * 30 - 5;
-
 				}
                wallGeometry3 = new THREE.PlaneGeometry( 300, 10000, 360,160 );
-
                 for ( var i = 0, l = wallGeometry3.vertices.length; i < l; i ++ ) {
 					var vertex = wallGeometry3.vertices[ i ];
 			        vertex.x += Math.random() * 30 - 5;
 					vertex.y += Math.random() * 3 + 5000;
 					vertex.z += Math.random() * 30 - 80;
-
 				}
                   wallGeometry4 = new THREE.PlaneGeometry( 300, 10000, 360,160 );
                   wallGeometry4.rotateY( - Math.PI / 2 );
@@ -400,46 +382,35 @@
 				    vertex.x += Math.random() * 30 + 70;
 					vertex.y += Math.random() * 3 + 5000;
 					vertex.z += Math.random() * 30 - 5;
-
 				}
-
 		        floorGeometry = new THREE.PlaneGeometry( 200, 200, 70, 70 );
 				floorGeometry.rotateX( - Math.PI / 2 );
-
 				for ( var i = 0, l = floorGeometry.vertices.length; i < l; i ++ ) {
-
 				var vertex = floorGeometry.vertices[ i ];
 				vertex.x += Math.random() * 15 - 10;
 				vertex.y += Math.random() * 5;
 				vertex.z += Math.random() * 15 - 10;
 			   }
-
 			   for ( var i = 0, l = floorGeometry.faces.length; i < l; i ++ ) {
 						var face4 = floorGeometry.faces[ i ];
 						face4.vertexColors[ 0 ] = new THREE.Color(0xD2691E);
 						face4.vertexColors[ 1 ] = new THREE.Color(0xE60000);
 						face4.vertexColors[ 2 ] = new THREE.Color(0x661400);
 					}
-
 			    floorGeometry2 = new THREE.PlaneGeometry( 200, 200, 30, 30 );
 				floorGeometry2.rotateX( - Math.PI / 2 );
-
 				for ( var i = 0, l = floorGeometry2.vertices.length; i < l; i ++ ) {
-
 				var vertex2 = floorGeometry2.vertices[ i ];
 				vertex2.x += Math.random() * 15 - 10;
 				vertex2.y += Math.random() * 1;
 				vertex2.z += Math.random() * 15 - 10;
 			   }
-
 			   for ( var i = 0, l = floorGeometry2.faces.length; i < l; i ++ ) {
 						var face5 = floorGeometry2.faces[ i ];
 						face5.vertexColors[ 0 ] = new THREE.Color(0x615D5A);
 						face5.vertexColors[ 1 ] = new THREE.Color(0x803E00);
 						face5.vertexColors[ 2 ] = new THREE.Color(0x000000);
 					}
-
-
 				 var boxGeometry = new THREE.BoxGeometry( 12, 1, 12);
 				for ( var i = 0, l = floorGeometry.faces.length; i < l; i ++ ) {
 				var face1 = floorGeometry.faces[ i ];
@@ -459,12 +430,10 @@
 						var wall3 = new THREE.Mesh( wallGeometry3, wallMaterial );
 						var wall4 = new THREE.Mesh( wallGeometry4, wallMaterial );
 						scene.add(wall, wall2, wall3, wall4);
-
 						// objects
 						var boxMaterial = new THREE.MeshPhongMaterial({color:0xff0000, transparent:true, opacity:0, side: THREE.DoubleSide});
 						for ( var i = 0; i < 600; i ++ ) {
 							//boxMaterial.color.setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
-
 							var box = new THREE.Mesh( boxGeometry, boxMaterial );
 							var randomXPos = Math.floor( Math.random() * 20 - 10 ) * 7;
 							var randomYPos = Math.floor( Math.random() * 600 ) * 20 + 10;
@@ -487,7 +456,6 @@
 					      
 	                    var boxMaterial2 = new THREE.MeshPhongMaterial({color:0xff0000, transparent:true, opacity:0, side: THREE.DoubleSide});
 						for ( var i = 0; i < 1400; i ++ ) {
-
 							var box2 = new THREE.Mesh( boxGeometry2, boxMaterial2 );
 							var randomXPos = Math.floor( Math.random() * 20 - 10 ) * 7;
 							var randomYPos = Math.floor( Math.random() * 600 ) * 20 + 10;
@@ -507,11 +475,9 @@
 							scene.add( box2 );
 							objects2.push( box2 );
 						}
-
 						var boxMaterial3 = new THREE.MeshPhongMaterial({color:0xff0000, transparent:true, opacity:0, side: THREE.DoubleSide});
 						for ( var i = 0; i < 400; i ++ ) {
 							//boxMaterial.color.setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
-
 							var box3 = new THREE.Mesh( boxGeometry3, boxMaterial3 );
 							var randomXPos = Math.floor( Math.random() * 20 - 10 ) * 7;
 							var randomYPos = Math.floor( Math.random() * 600 ) * 20 + 10;
@@ -531,9 +497,6 @@
 							scene.add( box3 );
 							objects3.push( box3 );
 						}
-
-
-
                         box10 = new THREE.BoxHelper( wall, 0xffff00 );
                         box10.update(wall);
                         scene.add( box10 );
@@ -548,7 +511,6 @@
                         scene.add( box10, box9, box8, box7 );
 						//----------------------------------------------------------------//
 						//****** Why the fuck can I still walk through that cube?   ******//
-
 						/*var boundBox1G = new THREE.BoxGeometry( 23, 23, 23);
 						var boundBox1M = new THREE.MeshPhongMaterial({color:0xff0000, side: THREE.DoubleSide});
 						var boundBox1 = new THREE.Mesh( boundBox1G, boundBox1M );
@@ -567,8 +529,8 @@
 						scene.add( boundBox2 );
 						scene.add( boundBox3 );
 						scene.add( boundBox4 );*/
-
 						raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, 1, 0 ), 0, 10 );
+						raycasterWall = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, 1, 0 ), 0, 0 );
 						
 						// floor
 						var floorMaterial = new THREE.MeshBasicMaterial({ vertexColors: THREE.VertexColors} );
@@ -583,11 +545,9 @@
 						document.body.appendChild( renderer.domElement );
 						//
 						window.addEventListener( 'resize', onWindowResize, false );
-
 						animate();
 					}, onProgress, onError );
 				});
-
 			}
 			function onWindowResize() {
 				camera.aspect = window.innerWidth / window.innerHeight;
@@ -599,13 +559,15 @@
 				if ( controlsEnabled === true ) {
 					raycaster.ray.origin.copy( controls.getObject().position );
 					raycaster.ray.origin.y -= 10;
+					raycasterWall.ray.origin.copy( controls.getObject().position );
+					raycasterWall.ray.origin.y -= 10;
 					var intersections = raycaster.intersectObjects( objects);
 					var intersections2 = raycaster.intersectObjects( objects2);
 					var intersections3 = raycaster.intersectObjects( objects3);
-					var intersections4 = raycaster.intersectObject( box10);
-					var intersections5 = raycaster.intersectObject( box9);
-					var intersections6 = raycaster.intersectObject( box8);
-					var intersections7 = raycaster.intersectObject( box7);
+					var intersections4 = raycasterWall.intersectObject( box10);
+					var intersections5 = raycasterWall.intersectObject( box9);
+					var intersections6 = raycasterWall.intersectObject( box8);
+					var intersections7 = raycasterWall.intersectObject( box7);
 					var onObject = intersections.length > 0;
 					var onObject2 = intersections2.length > 0;
 					var onObject3 = intersections3.length > 0;
@@ -686,7 +648,6 @@
 					controls.getObject().translateX( velocity.x * delta );
 					controls.getObject().translateY( velocity.y * delta );
 					controls.getObject().translateZ( velocity.z * delta );
-
 					if ( controls.getObject().position.y < 10 ) {
 						velocity.y = 0;
 						controls.getObject().position.y = 10;
