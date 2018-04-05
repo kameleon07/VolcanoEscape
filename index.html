@@ -652,8 +652,15 @@
 					}
 					}
 					if ( onObject8 === true ) {
-						velocity.y = Math.max( 0, velocity.y );
-						canJump = true;
+					   if (moveForward == true){
+					   velocity.z = 200;
+					}if (moveBackward == true){
+					   velocity.z = -200;
+					}if (moveRight == true){
+					   velocity.x = -200;
+					}if (moveLeft == true){
+					   velocity.x = 200;
+					}
 					}
                     //--------------------------------------------------------//
                                      //makes lava go up//
