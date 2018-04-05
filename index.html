@@ -134,7 +134,7 @@
 		</div>
 		<script>
 			(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//rawgit.com/mrdoob/stats.js/master/build/stats.min.js';document.head.appendChild(script);})()
-			var box9, box8, box7, box10;
+			var LavaBox, box9, box8, box7, box10;
 			var audio, playbtn, music, pausebtn;
 			var rockObject;
 			var camera, scene, renderer, controls;
@@ -497,6 +497,13 @@
 							scene.add( box3 );
 							objects3.push( box3 );
 						}
+
+						var floorMaterial = new THREE.MeshBasicMaterial({ vertexColors: THREE.VertexColors} );
+						var floor = new THREE.Mesh( floorGeometry, floorMaterial );
+						var floorMaterial2 = new THREE.MeshBasicMaterial({ vertexColors: THREE.VertexColors} );
+						var floor2 = new THREE.Mesh( floorGeometry2, floorMaterial2 );
+						scene.add( floor, floor2 );
+
                         box10 = new THREE.BoxHelper( wall, 0xffff00 );
                         box10.update(wall);
                         scene.add( box10 );
@@ -508,7 +515,9 @@
                         scene.add( box8 );
                         box7 = new THREE.BoxHelper( wall4, 0xffff00 );
                          box7.update(wall4);
-                        scene.add( box10, box9, box8, box7 );
+                        LavaBox = new THREE.BoxHelper( floor, 0xffff00 );
+                         LavaBox.update(floor);
+                        scene.add( box10, box9, box8, box7, LavaBox );
 						//----------------------------------------------------------------//
 						//****** Why the fuck can I still walk through that cube?   ******//
 						/*var boundBox1G = new THREE.BoxGeometry( 23, 23, 23);
@@ -531,13 +540,10 @@
 						scene.add( boundBox4 );*/
 						raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, 1, 0 ), 0, 10 );
 						raycasterWall = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, 1, 0 ), 0, 0 );
-						
+						raycasterLava = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, 1, 0 ), 0, 0 );
+
 						// floor
-						var floorMaterial = new THREE.MeshBasicMaterial({ vertexColors: THREE.VertexColors} );
-						var floor = new THREE.Mesh( floorGeometry, floorMaterial );
-						var floorMaterial2 = new THREE.MeshBasicMaterial({ vertexColors: THREE.VertexColors} );
-						var floor2 = new THREE.Mesh( floorGeometry2, floorMaterial2 );
-						scene.add( floor, floor2 );
+					
 						//
 						renderer = new THREE.WebGLRenderer();
 						renderer.setPixelRatio( window.devicePixelRatio );
@@ -561,6 +567,8 @@
 					raycaster.ray.origin.y -= 10;
 					raycasterWall.ray.origin.copy( controls.getObject().position );
 					raycasterWall.ray.origin.y -= 10;
+					raycasterLava.ray.origin.copy( controls.getObject().position );
+					raycasterLava.ray.origin.y -= 10;
 					var intersections = raycaster.intersectObjects( objects);
 					var intersections2 = raycaster.intersectObjects( objects2);
 					var intersections3 = raycaster.intersectObjects( objects3);
@@ -568,6 +576,7 @@
 					var intersections5 = raycasterWall.intersectObject( box9);
 					var intersections6 = raycasterWall.intersectObject( box8);
 					var intersections7 = raycasterWall.intersectObject( box7);
+					var intersections8 = raycasterLava.intersectObject( LavaBox );
 					var onObject = intersections.length > 0;
 					var onObject2 = intersections2.length > 0;
 					var onObject3 = intersections3.length > 0;
@@ -575,6 +584,7 @@
 					var onObject5 = intersections5.length > 0;
 					var onObject6 = intersections6.length > 0;
 					var onObject7 = intersections7.length > 0;
+					var onObject8 = intersections8.length > 0;
 					var time = performance.now();
 					var delta = ( time - prevTime ) / 1000;
  					velocity.x -= velocity.x * 10.0 * delta;
@@ -640,6 +650,10 @@
 					}if (moveLeft == true){
 					   velocity.x = 200;
 					}
+					}
+					if ( onObject8 === true ) {
+						velocity.y = Math.max( 0, velocity.y );
+						canJump = true;
 					}
                     //--------------------------------------------------------//
                                      //makes lava go up//
