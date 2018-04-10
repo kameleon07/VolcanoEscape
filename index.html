@@ -332,8 +332,8 @@
 									moveRight = true;
 									break;
 								case 32: // space
-									if ( canJump === true ) velocity.y += 350;
-						        	canJump = false;
+									if ( canJump === true ) velocity.y += 50;
+									canJump = false;
 									break;
 							}
 						};
@@ -603,7 +603,7 @@
 					var delta = ( time - prevTime ) / 1000;
  					velocity.x -= velocity.x * 10.0 * delta;
 					velocity.z -= velocity.z * 10.0 * delta;
-					velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
+					velocity.y -= 1 * 100.0 * delta; // 100.0 = mass
 					direction.z = Number( moveForward ) - Number( moveBackward );
 					direction.x = Number( moveLeft ) - Number( moveRight );
 					direction.normalize(); // this ensures consistent movements in all directions
@@ -685,7 +685,7 @@
 
 					if ( controls.getObject().position.y < 10 ) {
 						velocity.y = 0;
-						controls.getObject().position.y = 1500;
+						controls.getObject().position.y = 10;
 						canJump = true;
 					} 
 					prevTime = time;
