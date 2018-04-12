@@ -322,7 +322,7 @@
 									moveRight = true;
 									break;
 								case 32: // space
-									if ( canJump === true ) velocity.y += 90;
+									if ( canJump === true ) velocity.y += 250;
 									canJump = false;
 									break;
 							}
@@ -562,7 +562,7 @@
 					var delta = ( time - prevTime ) / 1000;
  					velocity.x -= velocity.x * 10.0 * delta;
 					velocity.z -= velocity.z * 10.0 * delta;
-					velocity.y -= 1 * 100.0 * delta; // 100.0 = mass
+					velocity.y -= 4 * 100.0 * delta; // 100.0 = mass
 					direction.z = Number( moveForward ) - Number( moveBackward );
 					direction.x = Number( moveLeft ) - Number( moveRight );
 					direction.normalize(); // this ensures consistent movements in all directions
@@ -579,7 +579,7 @@
 						      }
 					    }
 						if ( onObject === true ) {
-							velocity.y = 400;
+							velocity.y = 350;
 							canJump = false;
 						}
 						if ( onObject2 === true ) {
@@ -641,7 +641,7 @@
 					}
                     //--------------------------------------------------------//
                                      //makes lava go up//
-					floorGeometry.translate(0,0.1,0);
+					floorGeometry.translate(0,0.3,0);
 					//---------------------------------------------------------//
 					controls.getObject().translateX( velocity.x * delta );
 					controls.getObject().translateY( velocity.y * delta );
