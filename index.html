@@ -643,7 +643,6 @@
 					controls.getObject().translateZ( velocity.z * delta );
 					if ( controls.getObject().position.y < 10 ) {
 						velocity.y = 0;
-						controls.getObject().position.y = 10;
 						canJump = true;
 					} 
 					prevTime = time;
