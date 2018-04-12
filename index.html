@@ -643,8 +643,14 @@
 					controls.getObject().translateZ( velocity.z * delta );
 					if ( controls.getObject().position.y < 10 ) {
 						velocity.y = 0;
+						controls.getObject().position.y = 10;
 						canJump = true;
 					} 
+					if (controls.getObject().position.y > 9){
+						if (onObject != true || onObject2 != true || onObject3 != true){
+							canJump = false;
+						}
+					}
 					prevTime = time;
 				}
 				currentScore = Math.round(camera.getWorldPosition().y-10);
