@@ -433,7 +433,7 @@
 						var wall4 = new THREE.Mesh( wallGeometry4, wallMaterial );
 						scene.add(wall, wall2, wall3, wall4);
 						// objects
-						var boxMaterial = new THREE.MeshPhongMaterial({color:0xff0000, transparent:true, opacity:0, side: THREE.DoubleSide});
+						var boxMaterial = new THREE.MeshPhongMaterial({color:0xff0000, transparent:true, opacity:0, side: THREE.DoubleSide, emissiveIntensity = 2});
 						for ( var i = 0; i < 600; i ++ ) {
 							var box = new THREE.Mesh( boxGeometry, boxMaterial );
 							var randomXPos = Math.floor( Math.random() * 20 - 10 ) * 7;
