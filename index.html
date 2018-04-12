@@ -646,11 +646,12 @@
 						controls.getObject().position.y = 10;
 						canJump = true;
 					} 
-					if (controls.getObject().position.y > 9){
+					if (camera.getWorldPosition().y > 20){
 						if (onObject != true || onObject2 != true || onObject3 != true){
 							canJump = false;
-						}
+						
 					}
+				}
 					prevTime = time;
 				}
 				currentScore = Math.round(camera.getWorldPosition().y-10);
