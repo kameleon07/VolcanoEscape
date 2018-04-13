@@ -58,10 +58,10 @@
 						defPointerLockElement.requestPointerLock();
 						menuScreen.style.display = "none";
 						break;
-						case "playEasy"
-					defPointerLockElement.requestPointerLock();
+					case "playEasy":
+					   	defPointerLockElement.requestPointerLock();
 						menuScreen.style.display = "none";
-					break
+					break;
 					case "leaderboardBtn":
 						alert("implement me Yiannis!");
 						break;
@@ -134,8 +134,10 @@
 				}
 			};
 			var onError = function ( xhr ) { };
-			        normalGame();
-		function normalGame(){
+
+
+			normalGame();
+		    function normalGame(){
 
 			function spawnRockObject(x,y,z){
 				rockObject.position.x = x;
