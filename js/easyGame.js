@@ -53,12 +53,10 @@
 				switch (e.target.id) {
 					//#region menuScreen
 					case "playBtn":
-					normalGame();
 						defPointerLockElement.requestPointerLock();
 						menuScreen.style.display = "none";
 						break;
 					case "playEasy"
-					easyGame();
 					defPointerLockElement.requestPointerLock();
 						menuScreen.style.display = "none";
 					break
@@ -90,6 +88,9 @@
 						pauseScreen.style.display = "none";
 				}
 			});
+			
+				 easyGame();
+				function easyGame(){
 			// http://www.html5rocks.com/en/tutorials/pointerlock/intro/
 			var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
 			if ( havePointerLock ) {
@@ -134,10 +135,6 @@
 				}
 			};
 			var onError = function ( xhr ) { };
-
-
-				 easyGame();
-				function easyGame(){
 			
 			function spawnRockObject(x,y,z){
 				rockObject.position.x = x;

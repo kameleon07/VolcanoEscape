@@ -90,6 +90,9 @@
 						pauseScreen.style.display = "none";
 				}
 			});
+			
+			normalGame();
+		    function normalGame(){
 			// http://www.html5rocks.com/en/tutorials/pointerlock/intro/
 			var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
 			if ( havePointerLock ) {
@@ -134,10 +137,6 @@
 				}
 			};
 			var onError = function ( xhr ) { };
-
-
-			normalGame();
-		    function normalGame(){
 
 			function spawnRockObject(x,y,z){
 				rockObject.position.x = x;
