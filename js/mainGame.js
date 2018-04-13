@@ -52,6 +52,7 @@
 				switch (e.target.id) {
 					//#region menuScreen
 					case "playBtn":
+						init();
 						defPointerLockElement.requestPointerLock();
 						menuScreen.style.display = "none";
 						break;
@@ -139,7 +140,7 @@
 			}
 		
 			
-			init();
+			
 			
 			var controlsEnabled = false;
 			var moveForward = false;
