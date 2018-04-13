@@ -49,18 +49,18 @@
 			quitbtn.addEventListener("click", switchTrack);
             document.addEventListener("click", (e) => {
 				
-				
+
 				switch (e.target.id) {
 					//#region menuScreen
 					case "playBtn":
-						init();
 						defPointerLockElement.requestPointerLock();
 						menuScreen.style.display = "none";
+						init();
 						break;
 					case "leaderboardBtn":
-						play2();
 						defPointerLockElement.requestPointerLock();
 						menuScreen.style.display = "none";
+						play2();
 						break;
 					case "helpBtn":
 						
