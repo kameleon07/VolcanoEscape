@@ -4,7 +4,7 @@
 
 			(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//rawgit.com/mrdoob/stats.js/master/build/stats.min.js';document.head.appendChild(script);})()
 			var box9, box8, box7, box10, floor, floor2;
-			var audio, playbtn, music, pausebtn;
+			var audio, playbtn, music, pausebtn, playEasy;
 			var rockObject;
 			var camera, scene, renderer, controls;
 			var gamePause;
@@ -48,7 +48,9 @@
 			music.muted=false;
 			}
             playbtn = document.getElementById("playBtn");
+            playEasy = document.getElementById("playEasy");
 			playbtn.addEventListener("click", initAudioPlayer);
+			playEasy.addEventListener("click", initAudioPlayer);
 			quitbtn = document.getElementById("quitBtn");
 			quitbtn.addEventListener("click", switchTrack);
             document.addEventListener("click", (e) => {
@@ -59,6 +61,10 @@
 						defPointerLockElement.requestPointerLock();
 						menuScreen.style.display = "none";
 						break;
+						case "playEasy"
+					defPointerLockElement.requestPointerLock();
+						menuScreen.style.display = "none";
+					break
 					case "leaderboardBtn":
 						alert("implement me Yiannis!");
 						break;
