@@ -64,6 +64,7 @@
 						menuScreen.style.display = "none";
 						break;
 					case "backBtn":
+						window.location.reload();
 						defPointerUnlockElement.exitPointerLock();
 						menuScreen.style.display = "block";
 						blocker.style.display = "block";
