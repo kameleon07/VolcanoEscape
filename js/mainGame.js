@@ -6,6 +6,7 @@
 			var gamePause;
 			var objects = [], objects2 = [], objects3 = [];
 			var boundBoxes = [];
+			var wall, wall2, wall3, wall4;
 			var raycaster;
 			var score = 0;
 			var icey = false;
@@ -326,10 +327,10 @@
 				}
 		
 						var wallMaterial = new THREE.MeshBasicMaterial({ color: wallColour,  specular: 0xFFFFFF, flatShading: true} );
-						var wall = new THREE.Mesh( wallGeometry, wallMaterial );
-						var wall2 = new THREE.Mesh( wallGeometry2, wallMaterial );
-						var wall3 = new THREE.Mesh( wallGeometry3, wallMaterial );
-						var wall4 = new THREE.Mesh( wallGeometry4, wallMaterial );
+						wall = new THREE.Mesh( wallGeometry, wallMaterial );
+						wall2 = new THREE.Mesh( wallGeometry2, wallMaterial );
+					    wall3 = new THREE.Mesh( wallGeometry3, wallMaterial );
+						wall4 = new THREE.Mesh( wallGeometry4, wallMaterial );
 						scene.add(wall, wall2, wall3, wall4);
 
 						// objects
