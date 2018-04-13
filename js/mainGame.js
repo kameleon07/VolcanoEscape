@@ -1,3 +1,6 @@
+        basicGame();
+		function basicGame(){
+
 
 			(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//rawgit.com/mrdoob/stats.js/master/build/stats.min.js';document.head.appendChild(script);})()
 			var box9, box8, box7, box10, floor, floor2;
@@ -24,6 +27,7 @@
 			defPointerUnlockElement.exitPointerLock = defPointerUnlockElement.exitPointerLock ||
 					defPointerUnlockElement.mozExitPointerLock ||
 					defPointerUnlockElement.webkitExitPointerLock;
+
 			function mainMenuMusic(){
 			music = new Audio();
 			music.src = "audio/menuMusic.mp3";
@@ -138,7 +142,6 @@
 				scene.add( rockObject );
 			}
 		
-			
 			init();
 			
 			var controlsEnabled = false;
@@ -529,3 +532,6 @@
 				document.getElementById("scoreText").innerHTML = "Score: ".concat(score);
 				renderer.render( scene, camera );
 			}
+
+			}
+			
