@@ -11,13 +11,11 @@
 	<body>
 
 		<script src="js/three.js"></script>
-
 		<script src="js/controls/controls.js"></script>
 		<script src="js/loaders/MTLLoader.js"></script>
 		<script src="js/loaders/OBJLoader.js"></script>
 
 		<div id="blocker"></div>
-
 		<div id="instructions">
 			
 			<p class="keyboard-instructions"> (W, A, S, D = Move, SPACE = Jump, MOUSE = Look around)</p>
@@ -30,7 +28,7 @@
 		<div id="menuScreen">
 			<img src="images/volcanoescape3.png" alt="volcano" height="700">  
             <div id="buttons">
-			<p class="button button-play" id="playBtn">Play</p>		
+			<p class="button button-play" id="playBtn" onclick="init()">Play</p>		
 			<p class="button button-leaderboard" id="leaderboardBtn">Leaderboard</p>
 			<p class="button button-help" id="helpBtn">Help</p>
 		</div>
@@ -39,8 +37,5 @@
 			<p id="scoreText"></p>
 		</div>
 		<script src="js/mainGame.js"></script>
-		<script>
-			
-		</script>
 	</body>
 </html>
