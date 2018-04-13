@@ -56,7 +56,8 @@
 						menuScreen.style.display = "none";
 						break;
 					case "leaderboardBtn":
-						alert("implement me Yiannis!");
+						defPointerLockElement.requestPointerLock();
+						menuScreen.style.display = "none";
 						break;
 					case "helpBtn":
 						
