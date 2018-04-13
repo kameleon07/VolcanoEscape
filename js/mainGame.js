@@ -332,16 +332,6 @@
 						scene.add(wall, wall2, wall3, wall4);
 
 						var geometry = new THREE.Geometry();
-						geometry.colorsNeedUpdate = true;
-						wall.geometry.colorsNeedUpdate = true;
-						wall2.geometry.colorsNeedUpdate = true;
-						wall3.geometry.colorsNeedUpdate = true;
-						wall4.geometry.colorsNeedUpdate = true;
-
-
-
-
-
 						// objects
 						var boxMaterial = new THREE.MeshPhongMaterial({color:0xff0000, transparent:true, opacity:0, side: THREE.DoubleSide});
 						for ( var i = 0; i < 500; i ++ ) {
@@ -561,6 +551,8 @@
 						controls.getObject().position.y = 10;
 						canJump = true;
 					} 
+					render();
+
 					prevTime = time;
 				}
 				currentScore = Math.round(camera.getWorldPosition().y-10);
@@ -569,5 +561,8 @@
 					score = currentScore;
 				}
 				document.getElementById("scoreText").innerHTML = "Score: ".concat(score);
+				function render() {
+					
 				renderer.render( scene, camera );
-			}
+				}
+		}
