@@ -135,6 +135,7 @@
 		<script>
 			(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//rawgit.com/mrdoob/stats.js/master/build/stats.min.js';document.head.appendChild(script);})()
 			var box9, box8, box7, box10, floor, floor2;
+			var color = 0xD2691E;
 			var audio, playbtn, music, pausebtn;
 			var rockObject;
 			var camera, scene, renderer, controls;
@@ -192,10 +193,6 @@
 					case "easy":
 						defPointerLockElement.requestPointerLock();
 						menuScreen.style.display = "none";
-						boxMaterial3 = new THREE.MeshPhongMaterial({color:0xff0000, transparent:true, opacity:0, side: THREE.DoubleSide});
-						for ( var i = 0; i < 30131; i ++ ) {
-						}
-
 
 
 						break;
@@ -433,7 +430,7 @@
 				var face3 = floorGeometry.faces[ i ];
 				}
 		
-						var wallMaterial = new THREE.MeshBasicMaterial({ color: 0xD2691E,  specular: 0xFFFFFF, flatShading: true} );
+						var wallMaterial = new THREE.MeshBasicMaterial({ color: colour,  specular: 0xFFFFFF, flatShading: true} );
 						var wall = new THREE.Mesh( wallGeometry, wallMaterial );
 						var wall2 = new THREE.Mesh( wallGeometry2, wallMaterial );
 						var wall3 = new THREE.Mesh( wallGeometry3, wallMaterial );
