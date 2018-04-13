@@ -234,6 +234,7 @@
 									break;
 							}
 						};
+				var geometry = new THREE.Geometry();
 		                
 						document.addEventListener( 'keydown', onKeyDown, false );
 						document.addEventListener( 'keyup', onKeyUp, false );
@@ -331,7 +332,6 @@
 						var wall4 = new THREE.Mesh( wallGeometry4, wallMaterial );
 						scene.add(wall, wall2, wall3, wall4);
 
-						var geometry = new THREE.Geometry();
 						// objects
 						var boxMaterial = new THREE.MeshPhongMaterial({color:0xff0000, transparent:true, opacity:0, side: THREE.DoubleSide});
 						for ( var i = 0; i < 500; i ++ ) {
@@ -560,7 +560,8 @@
 					score = currentScore;
 				}
 				document.getElementById("scoreText").innerHTML = "Score: ".concat(score);
-		
+				wall.geometry.colorsNeedUpdate = true;
+				wall2.geometry.colorsNeedUpdate = true;
 				renderer.render( scene, camera );
 				
 }
