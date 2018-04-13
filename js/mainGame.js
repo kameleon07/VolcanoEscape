@@ -10,6 +10,7 @@
 			var boundBoxes = [];
 			var raycaster;
 			var score = 0;
+			var colour = 0xffff00;
 			var blocker = document.getElementById( 'blocker' );
 			var instructions = document.getElementById( 'instructions' );
             var menuScreen = document.getElementById("menuScreen");
@@ -291,7 +292,7 @@
 				var face3 = floorGeometry.faces[ i ];
 				}
 		
-						var wallMaterial = new THREE.MeshBasicMaterial({ color: 0xD2691E,  specular: 0xFFFFFF, flatShading: true} );
+						var wallMaterial = new THREE.MeshBasicMaterial({ color: 'colour',  specular: 0xFFFFFF, flatShading: true} );
 						var wall = new THREE.Mesh( wallGeometry, wallMaterial );
 						var wall2 = new THREE.Mesh( wallGeometry2, wallMaterial );
 						var wall3 = new THREE.Mesh( wallGeometry3, wallMaterial );
