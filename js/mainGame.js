@@ -6,7 +6,6 @@
 			var gamePause;
 			var objects = [], objects2 = [], objects3 = [];
 			var boundBoxes = [];
-			var wall, wall2, wall3, wall4;
 			var raycaster;
 			var score = 0;
 			var icey = false;
@@ -235,13 +234,12 @@
 									break;
 							}
 						};
-				var geometry = new THREE.Geometry();
 		                
 						document.addEventListener( 'keydown', onKeyDown, false );
 						document.addEventListener( 'keyup', onKeyUp, false );
-		                //----------------------------------------------------------------//
-		                // floor and cubes//
-		                //----------------------------------------------------------------//
+		     
+
+		     // change map colours//
 		              if (icey == true ){
                  floorColour = 0xFFFFFF; 
                  floorColour2 = 0xD7DBFF;
@@ -251,7 +249,9 @@
 			     lavaColour2 = 0x8490F0; 
 			     lavaColour3 = 0x3E4FCC;
                 }
-
+                        //----------------------------------------------------------------//
+		                // floor and cubes//
+		                //----------------------------------------------------------------//
               
                 wallGeometry = new THREE.PlaneGeometry( 300, 10000, 360,160 );
                 for ( var i = 0, l = wallGeometry.vertices.length; i < l; i ++ ) {
@@ -327,12 +327,10 @@
 				}
 		
 						var wallMaterial = new THREE.MeshBasicMaterial({ color: wallColour,  specular: 0xFFFFFF, flatShading: true} );
-						wall = new THREE.Mesh( wallGeometry, wallMaterial );
-						wall2 = new THREE.Mesh( wallGeometry2, wallMaterial );
-					    wall3 = new THREE.Mesh( wallGeometry3, wallMaterial );
-						wall4 = new THREE.Mesh( wallGeometry4, wallMaterial );
-						wall.geometry.color.setHex( 0xFF0000 );
-						wall.geometry.colorsNeedUpdate = true;
+						var wall = new THREE.Mesh( wallGeometry, wallMaterial );
+						var wall2 = new THREE.Mesh( wallGeometry2, wallMaterial );
+					    var wall3 = new THREE.Mesh( wallGeometry3, wallMaterial );
+						var wall4 = new THREE.Mesh( wallGeometry4, wallMaterial );
 						scene.add(wall, wall2, wall3, wall4);
 
 						// objects
