@@ -1,7 +1,6 @@
-
-			(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//rawgit.com/mrdoob/stats.js/master/build/stats.min.js';document.head.appendChild(script);})()
+	(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//rawgit.com/mrdoob/stats.js/master/build/stats.min.js';document.head.appendChild(script);})()
 			var box9, box8, box7, box10, floor, floor2;
-			var audio, playbtn, music, pausebtn, playEasy;
+			var audio, playbtn, music, pausebtn;
 			var rockObject;
 			var camera, scene, renderer, controls;
 			var gamePause;
@@ -24,7 +23,6 @@
 			defPointerUnlockElement.exitPointerLock = defPointerUnlockElement.exitPointerLock ||
 					defPointerUnlockElement.mozExitPointerLock ||
 					defPointerUnlockElement.webkitExitPointerLock;
-
 			function mainMenuMusic(){
 			music = new Audio();
 			music.src = "audio/menuMusic.mp3";
@@ -45,9 +43,7 @@
 			music.muted=false;
 			}
             playbtn = document.getElementById("playBtn");
-            playEasy = document.getElementById("playEasy");
 			playbtn.addEventListener("click", initAudioPlayer);
-			playEasy.addEventListener("click", initAudioPlayer);
 			quitbtn = document.getElementById("quitBtn");
 			quitbtn.addEventListener("click", switchTrack);
             document.addEventListener("click", (e) => {
@@ -58,11 +54,6 @@
 						defPointerLockElement.requestPointerLock();
 						menuScreen.style.display = "none";
 						break;
-					case "playEasy":
-					   	defPointerLockElement.requestPointerLock();
-						menuScreen.style.display = "none";
-						easyGame();
-					break;
 					case "leaderboardBtn":
 						alert("implement me Yiannis!");
 						break;
@@ -72,11 +63,9 @@
 						menuScreen.style.display = "none";
 						break;
 					case "backBtn":
-						window.location.reload();
-						defPointerUnlockElement.exitPointerLock();
+						
+						instructions.style.display = "none";
 						menuScreen.style.display = "block";
-						blocker.style.display = "block";
-						pauseScreen.style.display = "none";
 						break;
 					
 					case "continueBtn":
@@ -91,9 +80,6 @@
 						pauseScreen.style.display = "none";
 				}
 			});
-
-			normalGame();
-		    function normalGame(){
 			// http://www.html5rocks.com/en/tutorials/pointerlock/intro/
 			var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
 			if ( havePointerLock ) {
@@ -138,7 +124,7 @@
 				}
 			};
 			var onError = function ( xhr ) { };
-
+			
 			function spawnRockObject(x,y,z){
 				rockObject.position.x = x;
 				rockObject.position.y = y;
@@ -149,6 +135,7 @@
 				scene.add( rockObject );
 			}
 		
+			
 			init();
 			
 			var controlsEnabled = false;
@@ -539,6 +526,3 @@
 				document.getElementById("scoreText").innerHTML = "Score: ".concat(score);
 				renderer.render( scene, camera );
 			}
-
-			}
-			
