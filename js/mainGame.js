@@ -64,7 +64,10 @@
 						menuScreen.style.display = "none";
 						break;
 					case "backBtn":
-						defPointerLockElement.requestPointerLock();
+						defPointerUnlockElement.exitPointerLock();
+						menuScreen.style.display = "block";
+						blocker.style.display = "block";
+						pauseScreen.style.display = "none";
 						break;
 					
 					case "continueBtn":
