@@ -56,10 +56,11 @@
 						defPointerLockElement.requestPointerLock();
 						menuScreen.style.display = "none";
 						break;
-					case "playEasy"
-					defPointerLockElement.requestPointerLock();
+					case "playEasy":
+						defPointerLockElement.requestPointerLock();
 						menuScreen.style.display = "none";
-					break
+						easyGame();
+					break;
 					case "leaderboardBtn":
 						alert("implement me Yiannis!");
 						break;
@@ -88,7 +89,7 @@
 						pauseScreen.style.display = "none";
 				}
 			});
-			
+
 				 easyGame();
 				function easyGame(){
 			// http://www.html5rocks.com/en/tutorials/pointerlock/intro/
@@ -307,10 +308,10 @@
 						var wall2 = new THREE.Mesh( wallGeometry2, wallMaterial );
 						var wall3 = new THREE.Mesh( wallGeometry3, wallMaterial );
 						var wall4 = new THREE.Mesh( wallGeometry4, wallMaterial );
-						scene.add(wall, wall2, wall3, wall4);
+						scene.add();
 						// objects
 						var boxMaterial = new THREE.MeshPhongMaterial({color:0xff0000, transparent:true, opacity:0, side: THREE.DoubleSide});
-						for ( var i = 0; i < 600; i ++ ) {
+						for ( var i = 0; i < 0; i ++ ) {
 							var box = new THREE.Mesh( boxGeometry, boxMaterial );
 							var randomXPos = Math.floor( Math.random() * 20 - 8.85  ) * 6;
 							var randomYPos = Math.floor( Math.random() * 600 ) * 18 + 10;
@@ -332,7 +333,7 @@
 						}
 					      
 	                    var boxMaterial2 = new THREE.MeshPhongMaterial({color:0xff0000, transparent:true, opacity:0, side: THREE.DoubleSide});
-						for ( var i = 0; i < 1700; i ++ ) {
+						for ( var i = 0; i < 0; i ++ ) {
 							var box2 = new THREE.Mesh( boxGeometry2, boxMaterial2 );
 							var randomXPos = Math.floor( Math.random() * 20 - 8.85) * 6;
 							var randomYPos = Math.floor( Math.random() * 600 ) * 18 + 10;
@@ -353,7 +354,7 @@
 							objects2.push( box2 );
 						}
 						var boxMaterial3 = new THREE.MeshPhongMaterial({color:0xff0000, transparent:true, opacity:0, side: THREE.DoubleSide});
-						for ( var i = 0; i < 100; i ++ ) {
+						for ( var i = 0; i < 0; i ++ ) {
 							var box3 = new THREE.Mesh( boxGeometry3, boxMaterial3 );
 							var randomXPos = Math.floor( Math.random() * 20 - 8.85) * 6;
 							var randomYPos = Math.floor( Math.random() * 600 ) * 18 + 10;

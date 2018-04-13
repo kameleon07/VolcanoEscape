@@ -61,6 +61,7 @@
 					case "playEasy":
 					   	defPointerLockElement.requestPointerLock();
 						menuScreen.style.display = "none";
+						easyGame();
 					break;
 					case "leaderboardBtn":
 						alert("implement me Yiannis!");
@@ -90,7 +91,7 @@
 						pauseScreen.style.display = "none";
 				}
 			});
-			
+
 			normalGame();
 		    function normalGame(){
 			// http://www.html5rocks.com/en/tutorials/pointerlock/intro/
