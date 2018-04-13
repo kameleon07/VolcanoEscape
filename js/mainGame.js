@@ -157,6 +157,248 @@
             function init(){
             	load();
             }
+            function play2() {
+				var mtlLoader = new THREE.MTLLoader();
+				mtlLoader.load( 'models/Rock1.mtl', function( materials ) {
+					materials.preload();
+					var objLoader = new THREE.OBJLoader();
+					objLoader.setMaterials( materials );
+					objLoader.load( 'models/Rock1.obj', function ( object ) {
+						camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 350 );
+						scene = new THREE.Scene();
+						scene.background = new THREE.Color( 0x660000 );
+						scene.fog = new THREE.Fog( 0x800000, 0, 200 );
+						var light = new THREE.HemisphereLight( 0xeeeeff, 0x53535f, 0.75 );
+						light.position.set( 0.5, 1, 0.75 );
+						scene.add( light );
+						controls = new THREE.PointerLockControls( camera );
+						scene.add( controls.getObject() );
+						var onKeyDown = function ( event ) {
+							switch ( event.keyCode ) {
+								case 38: // up
+								case 87: // w
+									moveForward = true;
+									break;
+								case 37: // left
+								case 65: // a
+									moveLeft = true; break;
+								case 40: // down
+								case 83: // s
+									moveBackward = true;
+									break;
+								case 39: // right
+								case 68: // d
+									moveRight = true;
+									break;
+								case 32: // space
+									if ( canJump === true ) velocity.y += 250;
+									canJump = false;
+									break;
+							}
+						};
+						var onKeyUp = function ( event ) {
+							switch( event.keyCode ) {
+								case 38: // up
+								case 87: // w
+									moveForward = false;
+									break;
+								case 37: // left
+								case 65: // a
+									moveLeft = false;
+									break;
+								case 40: // down
+								case 83: // s
+									moveBackward = false;
+									break;
+								case 39: // right
+								case 68: // d
+									moveRight = false;
+									break;
+							}
+						};
+		                
+						document.addEventListener( 'keydown', onKeyDown, false );
+						document.addEventListener( 'keyup', onKeyUp, false );
+		                //----------------------------------------------------------------//
+		                // floor and cubes//
+		                //----------------------------------------------------------------//
+                
+                wallGeometry = new THREE.PlaneGeometry( 300, 10000, 360,160 );
+                for ( var i = 0, l = wallGeometry.vertices.length; i < l; i ++ ) {
+					var vertex = wallGeometry.vertices[ i ];
+					vertex.x += Math.random() * 30 - 5;
+					vertex.y += Math.random() * 3 + 5000;
+					vertex.z += Math.random() * 30 + 70;               
+				}   
+			
+				wallGeometry2 = new THREE.PlaneGeometry( 300, 10000, 360,160 );
+                wallGeometry2.rotateY( - Math.PI / 2 );
+                for ( var i = 0, l = wallGeometry2.vertices.length; i < l; i ++ ) {
+					var vertex = wallGeometry2.vertices[ i ];
+					vertex.x += Math.random() * 30 - 95;
+					vertex.y += Math.random() * 3 + 5000;
+					vertex.z += Math.random() * 30 - 5;
+				}
+               wallGeometry3 = new THREE.PlaneGeometry( 300, 10000, 360,160 );
+                for ( var i = 0, l = wallGeometry3.vertices.length; i < l; i ++ ) {
+					var vertex = wallGeometry3.vertices[ i ];
+			        vertex.x += Math.random() * 30 - 5;
+					vertex.y += Math.random() * 3 + 5000;
+					vertex.z += Math.random() * 30 - 80;
+				}
+                  wallGeometry4 = new THREE.PlaneGeometry( 300, 10000, 360,160 );
+                  wallGeometry4.rotateY( - Math.PI / 2 );
+                for ( var i = 0, l = wallGeometry4.vertices.length; i < l; i ++ ) {
+					var vertex = wallGeometry4.vertices[ i ];
+				    vertex.x += Math.random() * 30 + 70;
+					vertex.y += Math.random() * 3 + 5000;
+					vertex.z += Math.random() * 30 - 5;
+				}
+		        floorGeometry = new THREE.PlaneGeometry( 200, 200, 70, 70 );
+				floorGeometry.rotateX( - Math.PI / 2 );
+				for ( var i = 0, l = floorGeometry.vertices.length; i < l; i ++ ) {
+				var vertex = floorGeometry.vertices[ i ];
+				vertex.x += Math.random() * 15 - 10;
+				vertex.y += Math.random() * 5;
+				vertex.z += Math.random() * 15 - 10;
+			   }
+			   for ( var i = 0, l = floorGeometry.faces.length; i < l; i ++ ) {
+						var face4 = floorGeometry.faces[ i ];
+						face4.vertexColors[ 0 ] = new THREE.Color(0xD2691E);
+						face4.vertexColors[ 1 ] = new THREE.Color(0xE60000);
+						face4.vertexColors[ 2 ] = new THREE.Color(0x661400);
+					}
+			    floorGeometry2 = new THREE.PlaneGeometry( 200, 200, 30, 30 );
+				floorGeometry2.rotateX( - Math.PI / 2 );
+				for ( var i = 0, l = floorGeometry2.vertices.length; i < l; i ++ ) {
+				var vertex2 = floorGeometry2.vertices[ i ];
+				vertex2.x += Math.random() * 15 - 10;
+				vertex2.y += Math.random() * 1;
+				vertex2.z += Math.random() * 15 - 10;
+			   }
+			   for ( var i = 0, l = floorGeometry2.faces.length; i < l; i ++ ) {
+						var face5 = floorGeometry2.faces[ i ];
+						face5.vertexColors[ 0 ] = new THREE.Color(0x615D5A);
+						face5.vertexColors[ 1 ] = new THREE.Color(0x803E00);
+						face5.vertexColors[ 2 ] = new THREE.Color(0x000000);
+					}
+				 var boxGeometry = new THREE.BoxGeometry( 13, 0.01, 13);
+				for ( var i = 0, l = floorGeometry.faces.length; i < l; i ++ ) {
+				var face1 = floorGeometry.faces[ i ];
+				}
+				 var boxGeometry2 = new THREE.BoxGeometry( 16, 0.01, 16);
+				for ( var i = 0, l = floorGeometry.faces.length; i < l; i ++ ) {
+				var face2 = floorGeometry.faces[ i ];
+				}
+				var boxGeometry3 = new THREE.BoxGeometry( 21, 0.01, 21);
+				for ( var i = 0, l = floorGeometry.faces.length; i < l; i ++ ) {
+				var face3 = floorGeometry.faces[ i ];
+				}
+		
+						var wallMaterial = new THREE.MeshBasicMaterial({ color: 0xD2691E,  specular: 0xFFFFFF, flatShading: true} );
+						var wall = new THREE.Mesh( wallGeometry, wallMaterial );
+						var wall2 = new THREE.Mesh( wallGeometry2, wallMaterial );
+						var wall3 = new THREE.Mesh( wallGeometry3, wallMaterial );
+						var wall4 = new THREE.Mesh( wallGeometry4, wallMaterial );
+						scene.add(wall, wall2, wall3, wall4);
+						// objects
+						var boxMaterial = new THREE.MeshPhongMaterial({color:0xff0000, transparent:true, opacity:0, side: THREE.DoubleSide});
+						for ( var i = 0; i < 0; i ++ ) {
+							var box = new THREE.Mesh( boxGeometry, boxMaterial );
+							var randomXPos = Math.floor( Math.random() * 20 - 8.85  ) * 6;
+							var randomYPos = Math.floor( Math.random() * 600 ) * 18 + 10;
+							var randomZPos = Math.floor( Math.random() * 20 - 8 ) * 6;
+							box.position.x = randomXPos;
+							box.position.y = randomYPos;
+							box.position.z = randomZPos;
+							var object2 = object.clone();
+							object2.position.x = randomXPos;
+							object2.position.y = randomYPos-6;
+							object2.position.z = randomZPos;
+							object2.castShadow = true;
+							object2.scale.set( 4, 10, 4 )
+							object2.receiveShadow = true;
+							object2.visible = true;
+							scene.add( object2 );
+							scene.add( box );
+							objects.push( box );
+						}
+					      
+	                    var boxMaterial2 = new THREE.MeshPhongMaterial({color:0xff0000, transparent:true, opacity:0, side: THREE.DoubleSide});
+						for ( var i = 0; i < 0; i ++ ) {
+							var box2 = new THREE.Mesh( boxGeometry2, boxMaterial2 );
+							var randomXPos = Math.floor( Math.random() * 20 - 8.85) * 6;
+							var randomYPos = Math.floor( Math.random() * 600 ) * 18 + 10;
+							var randomZPos = Math.floor( Math.random() * 20 - 8 ) * 6;
+							box2.position.x = randomXPos;
+							box2.position.y = randomYPos;
+							box2.position.z = randomZPos;
+							var object3 = object.clone();
+							object3.position.x = randomXPos;
+							object3.position.y = randomYPos-12;
+							object3.position.z = randomZPos;
+							object3.castShadow = true;
+							object3.scale.set( 6, 6, 6 )
+							object3.receiveShadow = true;
+							object3.visible = true;
+							scene.add( object3 );
+							scene.add( box2 );
+							objects2.push( box2 );
+						}
+						var boxMaterial3 = new THREE.MeshPhongMaterial({color:0xff0000, transparent:true, opacity:0, side: THREE.DoubleSide});
+						for ( var i = 0; i < 0; i ++ ) {
+							var box3 = new THREE.Mesh( boxGeometry3, boxMaterial3 );
+							var randomXPos = Math.floor( Math.random() * 20 - 8.85) * 6;
+							var randomYPos = Math.floor( Math.random() * 600 ) * 18 + 10;
+							var randomZPos = Math.floor( Math.random() * 20 - 8 ) * 6;
+							box3.position.x = randomXPos;
+							box3.position.y = randomYPos;
+							box3.position.z = randomZPos;
+							var object4 = object.clone();
+							object4.position.x = randomXPos;
+							object4.position.y = randomYPos-8;
+							object4.position.z = randomZPos;
+							object4.castShadow = true;
+							object4.scale.set( 9, 4, 9 );
+							object4.receiveShadow = true;
+							object4.visible = true;
+							scene.add( object4 );
+							scene.add( box3 );
+							objects3.push( box3 );
+						}
+                        box10 = new THREE.BoxHelper( wall, 0xffff00 );
+                        box10.update(wall);
+                        scene.add( box10 );
+                        box9 = new THREE.BoxHelper( wall2, 0xffff00 );
+                        box9.update(wall2);
+                        scene.add( box9 );
+                        box8 = new THREE.BoxHelper( wall3, 0xffff00 );
+                        box8.update(wall3);
+                        scene.add( box8 );
+                        box7 = new THREE.BoxHelper( wall4, 0xffff00 );
+                        box7.update(wall4);
+                        scene.add( box10, box9, box8, box7 );
+						raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, 1, 0 ), 0, 10 );
+						raycasterWall = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, 1, 0 ), 0, 0 );
+						
+						// floor
+						var floorMaterial = new THREE.MeshBasicMaterial({ vertexColors: THREE.VertexColors} );
+						floor = new THREE.Mesh( floorGeometry, floorMaterial );
+						var floorMaterial2 = new THREE.MeshBasicMaterial({ vertexColors: THREE.VertexColors} );
+						floor2 = new THREE.Mesh( floorGeometry2, floorMaterial2 );
+						floor.translateY(-70);
+						scene.add( floor, floor2 );
+						//
+						renderer = new THREE.WebGLRenderer();
+						renderer.setPixelRatio( window.devicePixelRatio );
+						renderer.setSize( window.innerWidth, window.innerHeight );
+						document.body.appendChild( renderer.domElement );
+						//
+						window.addEventListener( 'resize', onWindowResize, false );
+						animate();
+					}, onProgress, onError );
+				});
+			}
 			function load() {
 				var mtlLoader = new THREE.MTLLoader();
 				mtlLoader.load( 'models/Rock1.mtl', function( materials ) {
