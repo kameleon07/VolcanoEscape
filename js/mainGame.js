@@ -49,6 +49,7 @@
 			quitbtn.addEventListener("click", switchTrack);
             document.addEventListener("click", (e) => {
 				
+				
 				switch (e.target.id) {
 					//#region menuScreen
 					case "playBtn":
