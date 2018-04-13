@@ -1,4 +1,4 @@
-      //  normalGame();
+        normalGame();
 		function normalGame(){
 
 
@@ -534,6 +534,4 @@
 			}
 
 			}
-			playbtn = document.getElementById("playBtn");
-			playbtn.addEventListener("click", normalGame);
 			
