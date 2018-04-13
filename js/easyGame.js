@@ -53,10 +53,12 @@
 				switch (e.target.id) {
 					//#region menuScreen
 					case "playBtn":
+					normalGame();
 						defPointerLockElement.requestPointerLock();
 						menuScreen.style.display = "none";
 						break;
 					case "playEasy"
+					easyGame();
 					defPointerLockElement.requestPointerLock();
 						menuScreen.style.display = "none";
 					break
