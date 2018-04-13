@@ -331,6 +331,8 @@
 						wall2 = new THREE.Mesh( wallGeometry2, wallMaterial );
 					    wall3 = new THREE.Mesh( wallGeometry3, wallMaterial );
 						wall4 = new THREE.Mesh( wallGeometry4, wallMaterial );
+						wall.geometry.color.setHex( 0xFF0000 );
+						wall.geometry.colorsNeedUpdate = true;
 						scene.add(wall, wall2, wall3, wall4);
 
 						// objects
@@ -561,8 +563,7 @@
 					score = currentScore;
 				}
 				document.getElementById("scoreText").innerHTML = "Score: ".concat(score);
-				wall.geometry.colorsNeedUpdate = true;
-				wall2.geometry.colorsNeedUpdate = true;
+
 				renderer.render( scene, camera );
 				
 }
