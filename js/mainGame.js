@@ -1,4 +1,3 @@
-
 			(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//rawgit.com/mrdoob/stats.js/master/build/stats.min.js';document.head.appendChild(script);})()
 			var box9, box8, box7, box10, floor, floor2;
 			var audio, playbtn, music, pausebtn;
@@ -72,7 +71,6 @@
 						break;
 					
 					case "continueBtn":
-						
 						defPointerLockElement.requestPointerLock();
 						break;
 					case "quitBtn":
@@ -137,7 +135,6 @@
 				rockObject.receiveShadow = true;
 				scene.add( rockObject );
 			}
-		
 			
 			init();
 			
