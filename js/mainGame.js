@@ -551,7 +551,6 @@
 						controls.getObject().position.y = 10;
 						canJump = true;
 					} 
-					render();
 
 					prevTime = time;
 				}
@@ -561,8 +560,7 @@
 					score = currentScore;
 				}
 				document.getElementById("scoreText").innerHTML = "Score: ".concat(score);
-				function render() {
-					
+		
 				renderer.render( scene, camera );
-				}
-		}
+				
+}
