@@ -1,20 +1,22 @@
 			(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//rawgit.com/mrdoob/stats.js/master/build/stats.min.js';document.head.appendChild(script);})()
 			var box9, box8, box7, box10, floor, floor2;
-			var audio, playbtn, music, pausebtn;
+			var audio, playbtn, music, pausebtn, slectLevelBtn, iceyBtn, chemicalBtn;
 			var rockObject;
 			var camera, scene, renderer, controls;
 			var gamePause;
-			var objects = [];
-			var objects2 = [];
-			var objects3 = [];
+			var objects = [], objects2 = [], objects3 = [];
 			var boundBoxes = [];
 			var raycaster;
 			var score = 0;
-			var colour = 0xffff00;
+			var icey = false;
+			var floorColour = 0x615D5A, floorColour2 = 0x803E00, floorColour3 = 0x000000, wallColour = 0xD2691E;
+			var lavaColour = 0xD2691E, lavaColour2 = 0xE60000, lavaColour3 = 0x661400;
 			var blocker = document.getElementById( 'blocker' );
 			var instructions = document.getElementById( 'instructions' );
+			var selectMenu = document.getElementById( 'selectMenu' );
             var menuScreen = document.getElementById("menuScreen");
 			var pauseScreen = document.getElementById("pauseScreen");
+			var selectScreen = document.getElementById("selectScreen");
 			var defPointerLockElement = document.body; 
 			var defPointerUnlockElement = document; 
 			defPointerLockElement.requestPointerLock = defPointerLockElement.requestPointerLock || 
@@ -45,6 +47,10 @@
 			}
             playbtn = document.getElementById("playBtn");
 			playbtn.addEventListener("click", initAudioPlayer);
+			iceyBtn = document.getElementById("iceyBtn");
+			chemicalBtn = document.getElementById("chemicalBtn");
+			iceyBtn.addEventListener("click", initAudioPlayer);
+			chemicalBtn.addEventListener("click", initAudioPlayer);
 			quitbtn = document.getElementById("quitBtn");
 			quitbtn.addEventListener("click", switchTrack);
             document.addEventListener("click", (e) => {
@@ -55,9 +61,22 @@
 						defPointerLockElement.requestPointerLock();
 						menuScreen.style.display = "none";
 						break;
-					case "leaderboardBtn":
-						alert("implement me Yiannis!");
-						break;
+					case "slectLevelBtn":
+						selectMenu.style.display = "block";
+						menuScreen.style.display = "none";
+                     break;
+
+					case"iceyBtn":
+						defPointerLockElement.requestPointerLock();
+				        selectMenu.style.display = "none";
+				        icey = true;
+					break;
+
+					case"chemicalBtn":
+						 defPointerLockElement.requestPointerLock();
+				       	 selectMenu.style.display = "none";
+					break;
+						    
 					case "helpBtn":
 						
 						instructions.style.display = "block";
@@ -96,11 +115,13 @@
 						controls.enabled = false;
 						blocker.style.display = 'block';
 						instructions.style.display = '';
+						selectMenu.style.display = '';
 						pauseScreen.style.display = 'block';
 					}
 				};
 				var pointerlockerror = function ( event ) {
 					instructions.style.display = '';
+					selectMenu.style.display = '';
 				};
 				// Hook pointer lock state change events
 				document.addEventListener( 'pointerlockchange', pointerlockchange, false );
@@ -219,7 +240,17 @@
 		                //----------------------------------------------------------------//
 		                // floor and cubes//
 		                //----------------------------------------------------------------//
-                
+		              if (icey == true ){
+                 floorColour = 0xFFFFFF; 
+                 floorColour2 = 0xD7DBFF;
+                 floorColour3 = 0xA8AFE3; 
+                 wallColour = 0xD9F8FD;
+			     lavaColour = 0x0921D2; 
+			     lavaColour2 = 0x8490F0; 
+			     lavaColour3 = 0x3E4FCC;
+                }
+
+              
                 wallGeometry = new THREE.PlaneGeometry( 300, 10000, 360,160 );
                 for ( var i = 0, l = wallGeometry.vertices.length; i < l; i ++ ) {
 					var vertex = wallGeometry.vertices[ i ];
@@ -227,6 +258,7 @@
 					vertex.y += Math.random() * 3 + 5000;
 					vertex.z += Math.random() * 30 + 70;               
 				}   
+
 			
 				wallGeometry2 = new THREE.PlaneGeometry( 300, 10000, 360,160 );
                 wallGeometry2.rotateY( - Math.PI / 2 );
@@ -261,9 +293,9 @@
 			   }
 			   for ( var i = 0, l = floorGeometry.faces.length; i < l; i ++ ) {
 						var face4 = floorGeometry.faces[ i ];
-						face4.vertexColors[ 0 ] = new THREE.Color(0xD2691E);
-						face4.vertexColors[ 1 ] = new THREE.Color(0xE60000);
-						face4.vertexColors[ 2 ] = new THREE.Color(0x661400);
+						face4.vertexColors[ 0 ] = new THREE.Color(lavaColour);
+						face4.vertexColors[ 1 ] = new THREE.Color(lavaColour2);
+						face4.vertexColors[ 2 ] = new THREE.Color(lavaColour3);
 					}
 			    floorGeometry2 = new THREE.PlaneGeometry( 200, 200, 30, 30 );
 				floorGeometry2.rotateX( - Math.PI / 2 );
@@ -275,9 +307,9 @@
 			   }
 			   for ( var i = 0, l = floorGeometry2.faces.length; i < l; i ++ ) {
 						var face5 = floorGeometry2.faces[ i ];
-						face5.vertexColors[ 0 ] = new THREE.Color(0x615D5A);
-						face5.vertexColors[ 1 ] = new THREE.Color(0x803E00);
-						face5.vertexColors[ 2 ] = new THREE.Color(0x000000);
+						face5.vertexColors[ 0 ] = new THREE.Color(floorColour);
+						face5.vertexColors[ 1 ] = new THREE.Color(floorColour2);
+						face5.vertexColors[ 2 ] = new THREE.Color(floorColour3);
 					}
 				 var boxGeometry = new THREE.BoxGeometry( 13, 0.01, 13);
 				for ( var i = 0, l = floorGeometry.faces.length; i < l; i ++ ) {
@@ -292,12 +324,24 @@
 				var face3 = floorGeometry.faces[ i ];
 				}
 		
-						var wallMaterial = new THREE.MeshBasicMaterial({ color: 'colour',  specular: 0xFFFFFF, flatShading: true} );
+						var wallMaterial = new THREE.MeshBasicMaterial({ color: wallColour,  specular: 0xFFFFFF, flatShading: true} );
 						var wall = new THREE.Mesh( wallGeometry, wallMaterial );
 						var wall2 = new THREE.Mesh( wallGeometry2, wallMaterial );
 						var wall3 = new THREE.Mesh( wallGeometry3, wallMaterial );
 						var wall4 = new THREE.Mesh( wallGeometry4, wallMaterial );
 						scene.add(wall, wall2, wall3, wall4);
+
+						var geometry = new THREE.Geometry();
+						geometry.colorsNeedUpdate = true;
+						wall.geometry.colorsNeedUpdate = true;
+						wall2.geometry.colorsNeedUpdate = true;
+						wall3.geometry.colorsNeedUpdate = true;
+						wall4.geometry.colorsNeedUpdate = true;
+
+
+
+
+
 						// objects
 						var boxMaterial = new THREE.MeshPhongMaterial({color:0xff0000, transparent:true, opacity:0, side: THREE.DoubleSide});
 						for ( var i = 0; i < 500; i ++ ) {
