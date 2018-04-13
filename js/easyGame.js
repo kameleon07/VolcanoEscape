@@ -1,3 +1,5 @@
+        basicGame();
+		function easyGame(){
 
 			(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//rawgit.com/mrdoob/stats.js/master/build/stats.min.js';document.head.appendChild(script);})()
 			var box9, box8, box7, box10, floor, floor2;
@@ -302,7 +304,7 @@
 						scene.add(wall, wall2, wall3, wall4);
 						// objects
 						var boxMaterial = new THREE.MeshPhongMaterial({color:0xff0000, transparent:true, opacity:0, side: THREE.DoubleSide});
-						for ( var i = 0; i < 500; i ++ ) {
+						for ( var i = 0; i < 600; i ++ ) {
 							var box = new THREE.Mesh( boxGeometry, boxMaterial );
 							var randomXPos = Math.floor( Math.random() * 20 - 8.85  ) * 6;
 							var randomYPos = Math.floor( Math.random() * 600 ) * 18 + 10;
@@ -324,7 +326,7 @@
 						}
 					      
 	                    var boxMaterial2 = new THREE.MeshPhongMaterial({color:0xff0000, transparent:true, opacity:0, side: THREE.DoubleSide});
-						for ( var i = 0; i < 1600; i ++ ) {
+						for ( var i = 0; i < 1700; i ++ ) {
 							var box2 = new THREE.Mesh( boxGeometry2, boxMaterial2 );
 							var randomXPos = Math.floor( Math.random() * 20 - 8.85) * 6;
 							var randomYPos = Math.floor( Math.random() * 600 ) * 18 + 10;
@@ -345,7 +347,7 @@
 							objects2.push( box2 );
 						}
 						var boxMaterial3 = new THREE.MeshPhongMaterial({color:0xff0000, transparent:true, opacity:0, side: THREE.DoubleSide});
-						for ( var i = 0; i < 200; i ++ ) {
+						for ( var i = 0; i < 100; i ++ ) {
 							var box3 = new THREE.Mesh( boxGeometry3, boxMaterial3 );
 							var randomXPos = Math.floor( Math.random() * 20 - 8.85) * 6;
 							var randomYPos = Math.floor( Math.random() * 600 ) * 18 + 10;
@@ -509,7 +511,7 @@
 					}
                     //--------------------------------------------------------//
                                      //makes lava go up//
-					floorGeometry.translate(0,0.3,0);
+					floorGeometry.translate(0,0.1,0);
 					//---------------------------------------------------------//
 					controls.getObject().translateX( velocity.x * delta );
 					controls.getObject().translateY( velocity.y * delta );
@@ -529,3 +531,4 @@
 				document.getElementById("scoreText").innerHTML = "Score: ".concat(score);
 				renderer.render( scene, camera );
 			}
+		}
