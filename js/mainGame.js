@@ -56,6 +56,7 @@
 						menuScreen.style.display = "none";
 						break;
 					case "leaderboardBtn":
+						play2();
 						defPointerLockElement.requestPointerLock();
 						menuScreen.style.display = "none";
 						break;
