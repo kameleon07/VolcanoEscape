@@ -82,7 +82,7 @@ function switchLevel(icey) {
 		lavaColour2 = 0x8490f0;
 		lavaColour3 = 0x3e4fcc;
 		scene.fog = new THREE.Fog(0xd6dbd6, 0, 200);
-		fogColour2 = 0xffffff;
+		fogColour2 = 0x38a1ff;
 	} else {
 		floorColour = 0xd6dbd6;
 		floorColour2 = 0x000000;
@@ -92,7 +92,7 @@ function switchLevel(icey) {
 		lavaColour2 = 0x38a536;
 		lavaColour3 = 0x22ce1e;
 		scene.fog = new THREE.Fog(0xd6dbd5, 0, 200);
-		fogColour2 = 0xd6dbd6;
+		fogColour2 = 0x32e02c;
 	}
 	// Generate new floor geometry object
 	floorGeometry = new THREE.PlaneGeometry(200, 200, 70, 70);
