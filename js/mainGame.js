@@ -31,7 +31,7 @@ var objects = [],
 var raycaster;
 var score = 0;
 // Colors for ridges of the wall and the lava
-var floorColour = 0x615d5a,
+var floorColour = 0x615da,
 	floorColour2 = 0x803e00,
 	floorColour3 = 0x000000,
 	wallColour = 0xd2691e;
@@ -760,6 +760,14 @@ function animate() {
 			}
 		}
 		if (onFloor) {
+			if (icey === true){
+			scene.fog = new THREE.Fog(0x25e9f7, 0, 60);
+			gamePause = true;
+			}
+			if (icey === false){
+            scene.fog = new THREE.Fog(0x1add41, 0, 60);
+			gamePause = true;
+			}
 			scene.fog = new THREE.Fog(fogColour2, 0, 60);
 			gamePause = true;
 		}
