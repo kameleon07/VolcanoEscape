@@ -88,6 +88,29 @@ function switchLevel(icey) {
 		lavaColour2 = 0xe60000;
 		lavaColour3 = 0x661400;
 	}
+	function switchLevel2(chemical) {
+	// Remove floor and remove lava
+	scene.remove(floor, lava);
+	// Remove all four walls
+	scene.remove(wall, wall2, wall3, wall4);
+	// Sets colors depending on selection
+	if (chemical == true) {
+		floorColour = 0xffffff;
+		floorColour2 = 0xd7dbff;
+		floorColour3 = 0xa8afe3;
+		wallColour = 0xd9f8fd;
+		lavaColour = 0x0921d2;
+		lavaColour2 = 0x8490f0;
+		lavaColour3 = 0x3e4fcc;
+	} else {
+		floorColour = 0x615d5a;
+		floorColour2 = 0x803e00;
+		floorColour3 = 0x000000;
+		wallColour = 0xd2691e;
+		lavaColour = 0xd2691e;
+		lavaColour2 = 0xe60000;
+		lavaColour3 = 0x661400;
+	}
 	// Generate new floor geometry object
 	floorGeometry = new THREE.PlaneGeometry(200, 200, 70, 70);
 	floorGeometry.rotateX(-Math.PI / 2);
@@ -221,7 +244,7 @@ document.addEventListener("click", e => {
 		case "chemicalBtn":
 			defPointerLockElement.requestPointerLock();
 			selectMenu.style.display = "none";
-			switchLevel(false);
+			switchLevel2(true);
 			break;
 
 		case "helpBtn":
