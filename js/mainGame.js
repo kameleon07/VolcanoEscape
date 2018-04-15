@@ -93,7 +93,7 @@ function switchLevel(icey) {
 		lavaColour = 0x04ff00;
 		lavaColour2 = 0x38a536;
 		lavaColour3 = 0x22ce1e;
-		scene.background = new THREE.Color(0x9aa897);
+		scene.background = new THREE.Color(0x4dc435);
 		scene.fog = new THREE.Fog(0xd6dbd5, 0, 200);
 		fogColour2 = 0x32e02c;
 	}
