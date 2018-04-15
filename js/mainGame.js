@@ -762,6 +762,11 @@ function animate() {
 		if (onFloor) {
 			scene.fog = new THREE.Fog(fogColour2, 0, 60);
 			gamePause = true;
+
+			if (icey === true){
+			scene.fog = new THREE.Fog(0xffffff, 0, 60);
+			gamePause = true;
+			}
 		}
 		// Makes lava go up
 		var lavaSpeedValue = document.getElementById("lavaSpeed").value / 10;
