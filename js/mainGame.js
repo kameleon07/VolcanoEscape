@@ -82,7 +82,7 @@ function switchLevel(icey) {
 		lavaColour2 = 0x8490f0;
 		lavaColour3 = 0x3e4fcc;
 		scene.fog = new THREE.Fog(0xd6dbd6, 0, 200);
-		fogColour2 = 0xd6dbd6;
+		fogColour2 = 0xffffff;
 	} else {
 		floorColour = 0xd6dbd6;
 		floorColour2 = 0x000000;
@@ -762,11 +762,6 @@ function animate() {
 		if (onFloor) {
 			scene.fog = new THREE.Fog(fogColour2, 0, 60);
 			gamePause = true;
-
-			if (icey === true){
-			scene.fog = new THREE.Fog(0xffffff, 0, 60);
-			gamePause = true;
-			}
 		}
 		// Makes lava go up
 		var lavaSpeedValue = document.getElementById("lavaSpeed").value / 10;
