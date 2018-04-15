@@ -38,6 +38,8 @@ var floorColour = 0x615d5a,
 var lavaColour = 0xd2691e,
 	lavaColour2 = 0xe60000,
 	lavaColour3 = 0x661400;
+var fogColour = 0x800000,
+    fogColour2 = 0xe76201;
 // Elements of the menu screen
 var blocker = document.getElementById("blocker");
 var instructions = document.getElementById("instructions");
@@ -67,7 +69,7 @@ function hideDiv() {
 // Remove key elements of enviroment, replace them with texturees in new style
 function switchLevel(icey) {
 	// Remove floor and remove lava
-	scene.remove(floor, lava);
+	scene.remove(fog, floor, lava);
 	// Remove all four walls
 	scene.remove(wall, wall2, wall3, wall4);
 	// Sets colors depending on selection
@@ -79,6 +81,8 @@ function switchLevel(icey) {
 		lavaColour = 0x0921d2;
 		lavaColour2 = 0x8490f0;
 		lavaColour3 = 0x3e4fcc;
+		fogColour = 0xd6dbd6;
+		fogColour2 = 0xd6dbd6;
 	} else {
 		floorColour = 0xd6dbd6;
 		floorColour2 = 0x000000;
@@ -87,6 +91,8 @@ function switchLevel(icey) {
 		lavaColour = 0x04ff00;
 		lavaColour2 = 0x38a536;
 		lavaColour3 = 0x22ce1e;
+		fogColour = 0xd6dbd6;
+		fogColour2 = 0xd6dbd6;
 	}
 	// Generate new floor geometry object
 	floorGeometry = new THREE.PlaneGeometry(200, 200, 70, 70);
@@ -349,10 +355,10 @@ function init() {
 				);
 				scene = new THREE.Scene();
 				scene.background = new THREE.Color(0x660000);
-				scene.fog = new THREE.Fog(0x800000, 0, 200);
+				var fog = new THREE.Fog(fogColour, 0, 200);
 				var light = new THREE.HemisphereLight(0xeeeeff, 0x53535f, 0.75);
 				light.position.set(0.5, 1, 0.75);
-				scene.add(light);
+				scene.add(light, fog);
 				controls = new THREE.PointerLockControls(camera);
 				scene.add(controls.getObject());
 				var onKeyDown = function(event) {
@@ -754,7 +760,7 @@ function animate() {
 			}
 		}
 		if (onFloor) {
-			scene.fog = new THREE.Fog(0xe76201, 0, 60);
+			scene.fog = new THREE.Fog(fogColour2, 0, 60);
 			gamePause = true;
 		}
 		// Makes lava go up
