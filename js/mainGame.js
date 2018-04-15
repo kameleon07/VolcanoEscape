@@ -40,6 +40,7 @@ var lavaColour = 0xd2691e,
 	lavaColour3 = 0x661400;
 var fogColour = 0x800000,
     fogColour2 = 0xe76201;
+var backgroundColour = 0x660000;
 // Elements of the menu screen
 var blocker = document.getElementById("blocker");
 var instructions = document.getElementById("instructions");
@@ -83,6 +84,7 @@ function switchLevel(icey) {
 		lavaColour3 = 0x3e4fcc;
 		scene.fog = new THREE.Fog(0xd6dbd6, 0, 200);
 		fogColour2 = 0x38a1ff;
+		backgroundColour = 0xb1b2b5;
 	} else {
 		floorColour = 0xd6dbd6;
 		floorColour2 = 0x000000;
@@ -93,6 +95,7 @@ function switchLevel(icey) {
 		lavaColour3 = 0x22ce1e;
 		scene.fog = new THREE.Fog(0xd6dbd5, 0, 200);
 		fogColour2 = 0x32e02c;
+		backgroundColour = 0x9aa897; 
 	}
 	// Generate new floor geometry object
 	floorGeometry = new THREE.PlaneGeometry(200, 200, 70, 70);
@@ -354,7 +357,7 @@ function init() {
 					350
 				);
 				scene = new THREE.Scene();
-				scene.background = new THREE.Color(0x660000);
+				scene.background = new THREE.Color(backgroundLava);
 				scene.fog = new THREE.Fog(fogColour, 0, 200);
 				var light = new THREE.HemisphereLight(0xeeeeff, 0x53535f, 0.75);
 				light.position.set(0.5, 1, 0.75);
