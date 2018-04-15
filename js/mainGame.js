@@ -760,14 +760,6 @@ function animate() {
 			}
 		}
 		if (onFloor) {
-			if (icey === true){
-			scene.fog = new THREE.Fog(0x25e9f7, 0, 60);
-			gamePause = true;
-			}
-			if (icey === false){
-            scene.fog = new THREE.Fog(0x1add41, 0, 60);
-			gamePause = true;
-			}
 			scene.fog = new THREE.Fog(fogColour2, 0, 60);
 			gamePause = true;
 		}
