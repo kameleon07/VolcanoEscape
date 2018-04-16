@@ -16,7 +16,7 @@ var wantsToPlayMusic = true;
 // Variables for bound boxes
 var wallTwoBound, wallThreeBound, wallFourBound, wallOneBound, floor, lava;
 // Menu buttons
-var audio, playbtn, music, pausebtn, slectLevelBtn, iceyBtn, chemicalBtn;
+var audio, playbtn, music, pausebtn, slectLevelBtn, iceyBtn, chemicalBtn, showFinalScore;
 // Audio
 var gameAudio, mainMenuMusic, deathAudio, playDeath, mutebtn;
 var rockObject;
@@ -792,6 +792,8 @@ function animate() {
 }
 function displayScore()
 {
-	document.getElementById("boi").innerHTML = '<p id = "finalScore"></p>';
-	document.getElementById("boi2").innerHTML = score;
+	showFinalScore =document.getElementById("boi");
+	showFinalScore.style.background = "url(images/score.png) no-repeat";
+	//document.getElementById("boi").innerHTML = '<p id = "finalScore"></p>';
+	//document.getElementById("boi2").innerHTML = score;
 }
