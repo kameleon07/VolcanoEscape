@@ -785,7 +785,7 @@ function animate() {
 	if (currentScore > score) {
 		score = currentScore;
 	}
-	document.getElementById("scoreText").innerHTML = "Score: ".concat(score);
+	document.getElementById("scoreText").innerHTML = score;
 
 	renderer.render(scene, camera);
 }
