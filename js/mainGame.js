@@ -62,7 +62,11 @@ defPointerUnlockElement.exitPointerLock =
 	defPointerUnlockElement.webkitExitPointerLock;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 setTimeout(hideDiv, 7000);
+=======
+setTimeout(hideDiv, 11000);
+>>>>>>> parent of 4bdb81a... asda
 =======
 setTimeout(hideDiv, 11000);
 >>>>>>> parent of 4bdb81a... asda
@@ -769,7 +773,6 @@ function animate() {
 		if (onFloor) {
 			scene.fog = new THREE.Fog(fogColour2, 0, 60);
 			gamePause = true;
-		    displayScore();
 		}
 		// Makes lava go up
 		var lavaSpeedValue = document.getElementById("lavaSpeed").value / 10;
@@ -793,9 +796,4 @@ function animate() {
 	document.getElementById("scoreText").innerHTML = "Score: ".concat(score);
 
 	renderer.render(scene, camera);
-}
-function displayScore()
-{
-	document.getElementById("boi").innerHTML = '<p id = "finalScore"></p>';
-	document.getElementById("boi2").innerHTML = score;
 }
