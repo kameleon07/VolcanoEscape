@@ -62,7 +62,7 @@ defPointerUnlockElement.exitPointerLock =
 	defPointerUnlockElement.webkitExitPointerLock;
 
 
-setTimeout(hideDiv, 7000);
+setTimeout(hideDiv, 6900);
 function hideDiv() {
 	document.getElementById("loadingScreen").style.display = "none";
 	document.getElementById("slidecontainer").style.display = "block";
@@ -645,6 +645,8 @@ function onWindowResize() {
 	renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
+playDeath = true;
+
 function animate() {
 	requestAnimationFrame(animate);
 	if (controlsEnabled === true) {
@@ -764,6 +766,13 @@ function animate() {
 			}
 		}
 		if (onFloor) {
+			while (playDeath == true){
+				pauseGameplay();
+				deathAudio = new Audio();
+				deathAudio.src = "audio/deathEffect.mp3";
+				deathAudio.play();
+				playDeath = false;
+			}
 			scene.fog = new THREE.Fog(fogColour2, 0, 60);
 			gamePause = true;
 		    displayScore();
