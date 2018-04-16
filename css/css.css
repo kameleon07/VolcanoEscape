@@ -148,19 +148,14 @@ video {
 	right: 0;
 }
 #boi{
-	/*position:absolute;
+	position:absolute;
 	bottom: 55%;
 	right:30%;
 	padding:150px;
-	padding-right:145px;*/
-	/*background-image:url(../images/score.png);
+	padding-right:145px;
+	background-image:url(../images/score.png);
 	background-repeat:no-repeat;
-	background-size: 100% 50%;*/
-	right: 50%;
-	bottom: 50%;
-	position: absolute;
-	width: 100px;
-	height: 100px;
+	background-size: 100% 50%;
 }
 #boi2{
 	position: absolute;
