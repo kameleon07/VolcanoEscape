@@ -682,6 +682,7 @@ function animate() {
 		if (gamePause) {
 			// stops game when you die, controls disabled
 			defPointerUnlockElement.exitPointerLock();
+			document.getElementById("scoreImage").style.display = "block";
 			document.getElementById("continueBtn").style.display = "none";
 		} else {
 			if (moveForward || moveBackward)
@@ -785,7 +786,7 @@ function animate() {
 	if (currentScore > score) {
 		score = currentScore;
 	}
-	document.getElementById("scoreText").innerHTML = score;
+	document.getElementById("scoreText").innerHTML = "Score: ".concat(score);
 
 	renderer.render(scene, camera);
 }
