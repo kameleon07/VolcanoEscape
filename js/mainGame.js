@@ -61,7 +61,7 @@ defPointerUnlockElement.exitPointerLock =
 	defPointerUnlockElement.mozExitPointerLock ||
 	defPointerUnlockElement.webkitExitPointerLock;
 
-setTimeout(hideDiv, 11000);
+setTimeout(hideDiv, 1000);
 function hideDiv() {
 	document.getElementById("loadingScreen").style.display = "none";
 	document.getElementById("slidecontainer").style.display = "block";
@@ -637,6 +637,11 @@ function init() {
 		);
 	});
 }
+function displayScore()
+{
+document.getElementById("scoreLogo").innerHTML = '<p id = "scoreLogo"></p>';
+document.getElementById("finalScore").innerHTML = score;
+}
 
 function onWindowResize() {
 	camera.aspect = window.innerWidth / window.innerHeight;
@@ -764,6 +769,7 @@ function animate() {
 		}
 		if (onFloor) {
 			scene.fog = new THREE.Fog(fogColour2, 0, 60);
+			displayScore();
 			gamePause = true;
 		}
 		// Makes lava go up
