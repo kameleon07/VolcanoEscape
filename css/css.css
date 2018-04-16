@@ -147,20 +147,15 @@ video {
 	bottom: 0;
 	right: 0;
 }
-#boi{
-	/*position:absolute;
+#finalScore{
+	position:absolute;
 	bottom: 55%;
 	right:30%;
 	padding:150px;
 	padding-right:145px;
 	background-image:url(../images/score.png);
 	background-repeat:no-repeat;
-	background-size: 100% 50%;*/
-	right: 50%;
-	bottom: 50%;
-	position: absolute;
-	width: 1000px;
-	height: 1000px;
+	background-size: 100% 200%;
 }
 #boi2{
 	position: absolute;
