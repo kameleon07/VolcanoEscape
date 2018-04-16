@@ -793,6 +793,6 @@ function animate() {
 }
 function displayScore()
 {
-	document.getElementById("boi").innerHTML = '<p id = "finalScore"></p>';
-	document.getElementById("boi2").innerHTML = score;
+	document.getElementById("scoreContainer").innerHTML = '<p id = "finalScore"></p>';
+	document.getElementById("scoreDisplay").innerHTML = score;
 }
