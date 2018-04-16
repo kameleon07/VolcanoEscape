@@ -94,7 +94,7 @@ function switchLevel(icey) {
 		lavaColour2 = 0x38a536;
 		lavaColour3 = 0x22ce1e;
 		scene.background = new THREE.Color(0x9aa897);
-		scene.fog = new THREE.Fog(0xd6dbd5, 0, 200);
+		scene.fog = new THREE.Fog(0x859583, 0, 200);
 		fogColour2 = 0x32e02c;
 	}
 	// Generate new floor geometry object
