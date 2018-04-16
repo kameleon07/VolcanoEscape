@@ -637,11 +637,6 @@ function init() {
 		);
 	});
 }
-function displayScore()
-{
-document.getElementById("scoreLogo").innerHTML = '<p id = "scoreLogo"></p>';
-document.getElementById("finalScore").innerHTML = score;
-}
 
 function onWindowResize() {
 	camera.aspect = window.innerWidth / window.innerHeight;
@@ -769,8 +764,8 @@ function animate() {
 		}
 		if (onFloor) {
 			scene.fog = new THREE.Fog(fogColour2, 0, 60);
-			displayScore();
 			gamePause = true;
+		    displayScore();
 		}
 		// Makes lava go up
 		var lavaSpeedValue = document.getElementById("lavaSpeed").value / 10;
@@ -794,4 +789,9 @@ function animate() {
 	document.getElementById("scoreText").innerHTML = "Score: ".concat(score);
 
 	renderer.render(scene, camera);
+}
+function displayScore()
+{
+document.getElementById("boi").innerHTML = '<p id = "finalScore"></p>';
+document.getElementById("boi2").innerHTML = score;
 }
