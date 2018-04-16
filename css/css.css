@@ -149,7 +149,7 @@ video {
 }
 #finalScore{
 	position:absolute;
-	bottom: 40%;
+	bottom: 52%;
 	right:37%;
 	padding:210px;
 	background-image:url(../images/score.png);
@@ -158,7 +158,7 @@ video {
 }
 #scoreDisplay{
 	position: absolute;
-	bottom:55%;
+	bottom:60%;
 	right:52%;
 	left:48%;
 	padding:10px;

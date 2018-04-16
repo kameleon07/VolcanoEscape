@@ -767,13 +767,14 @@ function animate() {
 		}
 		if (onFloor) {
 			while (playDeath == true){
-				pauseGameplay();
+			//	pauseGameplay();
 				deathAudio = new Audio();
 				deathAudio.src = "audio/deathEffect.mp3";
 				deathAudio.play();
 				playDeath = false;
 			}
 			scene.fog = new THREE.Fog(fogColour2, 0, 60);
+			document.getElementById("scoreText").style.display = "none";
 			gamePause = true;
 		    displayScore();
 		}
