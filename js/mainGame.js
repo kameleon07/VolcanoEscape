@@ -61,7 +61,7 @@ defPointerUnlockElement.exitPointerLock =
 	defPointerUnlockElement.mozExitPointerLock ||
 	defPointerUnlockElement.webkitExitPointerLock;
 
-setTimeout(hideDiv, 120);
+setTimeout(hideDiv, 11000);
 function hideDiv() {
 	document.getElementById("loadingScreen").style.display = "none";
 	document.getElementById("slidecontainer").style.display = "block";
