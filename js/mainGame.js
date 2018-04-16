@@ -792,6 +792,8 @@ function animate() {
 }
 function displayScore()
 {
-document.getElementById("boi").innerHTML = '<p id = "finalScore"></p>';
-document.getElementById("boi2").innerHTML = score;
+	showFinalScore =document.getElementById("boi");
+	showFinalScore.style.background = "url(images/score.png) no-repeat"
+//document.getElementById("boi").innerHTML = '<p id = "finalScore"></p>';
+//document.getElementById("boi2").innerHTML = score;
 }
