@@ -64,6 +64,8 @@ defPointerUnlockElement.exitPointerLock =
 setTimeout(hideDiv, 7000);
 function hideDiv() {
 	document.getElementById("loadingScreen").style.display = "none";
+	document.getElementById("scoreImage").style.display = "block";
+	document.getElementById("scoreImage").height = "10";
 	document.getElementById("slidecontainer").style.display = "block";
 }
 
@@ -682,7 +684,6 @@ function animate() {
 		if (gamePause) {
 			// stops game when you die, controls disabled
 			defPointerUnlockElement.exitPointerLock();
-			document.getElementById("scoreImage").style.display = "block";
 			document.getElementById("continueBtn").style.display = "none";
 		} else {
 			if (moveForward || moveBackward)
