@@ -149,8 +149,8 @@ video {
 }
 #finalScore{
 	position:absolute;
-	bottom: 300px;
-	right:;
+	bottom: 55%;
+	right:40%;
 	padding:150px;
 	padding-right:145px;
 	background-image:url(../images/score.png);
@@ -158,9 +158,11 @@ video {
 	background-size: 200px 150px;
 }
 #boi2{
-	margin: auto;
-    width: 50%;
-    padding: 10px;
+	position: absolute;
+	bottom:55%;
+	right:52%;
+	left:48%;
+	padding:10px;
 	color:#ffffff;
 	font-size:30px;
 }

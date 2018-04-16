@@ -61,7 +61,11 @@ defPointerUnlockElement.exitPointerLock =
 	defPointerUnlockElement.mozExitPointerLock ||
 	defPointerUnlockElement.webkitExitPointerLock;
 
+<<<<<<< HEAD
 setTimeout(hideDiv, 7000);
+=======
+setTimeout(hideDiv, 11000);
+>>>>>>> parent of 4bdb81a... asda
 function hideDiv() {
 	document.getElementById("loadingScreen").style.display = "none";
 	document.getElementById("slidecontainer").style.display = "block";
